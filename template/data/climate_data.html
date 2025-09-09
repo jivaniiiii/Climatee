@@ -1,0 +1,400 @@
+{% extends 'base.html' %}
+
+{% block title %}Climate Data - EarthScape Climate Agency{% endblock %}
+
+{% block extra_css %}
+<style>
+    .data-row {
+        transition: background-color 0.2s;
+    }
+    .data-row:hover {
+        background-color: rgba(46, 139, 87, 0.05);
+    }
+    .anomaly-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #dc3545;
+        display: inline-block;
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+    .quality-bar {
+        height: 4px;
+        border-radius: 2px;
+        background: linear-gradient(to right, #dc3545, #ffc107, #28a745);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-0 text-climate-primary">
+                        <i class="fas fa-chart-line me-2"></i>Climate Data
+                    </h1>
+                    <p class="text-muted mb-0">Explore and analyze climate data from various sources</p>
+                </div>
+                <div>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-outline-primary" onclick="exportData()">
+                            <i class="fas fa-download me-1"></i>Export
+                        </button>
+                        <button class="btn btn-climate-primary" onclick="refreshData()">
+                            <i class="fas fa-sync-alt me-1"></i>Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card card-climate">
+                <div class="card-header bg-climate-light">
+                    <h6 class="card-title mb-0">
+                        <i class="fas fa-filter me-2"></i>Data Filters
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-3">
+                            <label for="data_type" class="form-label">Data Type</label>
+                            <select class="form-select" id="data_type" name="data_type">
+                                <option value="">All Types</option>
+                                {% for value, label in data_types %}
+                                <option value="{{ value }}" {% if current_filters.data_type == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="source_id" class="form-label">Data Source</label>
+                            <select class="form-select" id="source_id" name="source_id">
+                                <option value="">All Sources</option>
+                                {% for source in data_sources %}
+                                <option value="{{ source.id }}" {% if current_filters.source_id == source.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ source.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ current_filters.start_date }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ current_filters.end_date }}">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-climate-primary w-100">
+                                <i class="fas fa-search me-1"></i>Apply
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Summary -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-primary">
+                <div class="card-body">
+                    <i class="fas fa-database fa-2x text-primary mb-2"></i>
+                    <h4 class="text-primary">{{ page_obj.paginator.count|default:0 }}</h4>
+                    <small class="text-muted">Total Records</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-success">
+                <div class="card-body">
+                    <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                    <h4 class="text-success">-</h4>
+                    <small class="text-muted">High Quality</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-warning">
+                <div class="card-body">
+                    <i class="fas fa-exclamation-triangle fa-2x text-warning mb-2"></i>
+                    <h4 class="text-warning">-</h4>
+                    <small class="text-muted">Anomalies</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-info">
+                <div class="card-body">
+                    <i class="fas fa-clock fa-2x text-info mb-2"></i>
+                    <h4 class="text-info">-</h4>
+                    <small class="text-muted">Last 24h</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-climate">
+                <div class="card-header bg-climate-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-table me-2"></i>Climate Data Records
+                        </h5>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted me-3">
+                                Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }} records
+                            </small>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button class="btn btn-outline-secondary" onclick="toggleView('table')" id="tableViewBtn">
+                                    <i class="fas fa-table"></i>
+                                </button>
+                                <button class="btn btn-outline-secondary" onclick="toggleView('chart')" id="chartViewBtn">
+                                    <i class="fas fa-chart-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Table View -->
+                    <div id="tableView">
+                        {% if page_obj %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Data Type</th>
+                                        <th>Value</th>
+                                        <th>Source</th>
+                                        <th>Quality</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for data in page_obj %}
+                                    <tr class="data-row">
+                                        <td>
+                                            <small class="text-muted">{{ data.timestamp|date:"M d, Y" }}</small><br>
+                                            <small>{{ data.timestamp|time:"H:i:s" }}</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-secondary">{{ data.get_data_type_display }}</span>
+                                        </td>
+                                        <td>
+                                            <strong>{{ data.value|floatformat:2 }}</strong>
+                                            <small class="text-muted">{{ data.unit }}</small>
+                                        </td>
+                                        <td>
+                                            <small>{{ data.data_source.name|truncatechars:20 }}</small><br>
+                                            <small class="text-muted">{{ data.data_source.get_source_type_display }}</small>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="quality-bar me-2" style="width: 30px;">
+                                                    <div style="width: {% widthratio data.quality_score 1 100 %}%; height: 100%; background-color: 
+                                                        {% if data.quality_score >= 0.8 %}#28a745
+                                                        {% elif data.quality_score >= 0.6 %}#ffc107
+                                                        {% else %}#dc3545{% endif %};"></div>
+                                                </div>
+                                                <small>{{ data.quality_score|floatformat:2 }}</small>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {% if data.is_anomaly %}
+                                                <span class="anomaly-indicator me-1"></span>
+                                                <span class="badge bg-danger">Anomaly</span>
+                                            {% else %}
+                                                <span class="badge bg-success">Normal</span>
+                                            {% endif %}
+                                            {% if not data.processed %}
+                                                <br><small class="text-warning">Unprocessed</small>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button class="btn btn-outline-primary" onclick="viewDataDetails('{{ data.id }}')" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-outline-info" onclick="showOnMap('{{ data.data_source.location_lat }}', '{{ data.data_source.location_lon }}')" title="Show on Map">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        {% if page_obj.has_other_pages %}
+                        <nav aria-label="Climate data pagination" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1{% for key, value in current_filters.items %}{% if value %}&{{ key }}={{ value }}{% endif %}{% endfor %}">First</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% for key, value in current_filters.items %}{% if value %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                <li class="page-item active">
+                                    <span class="page-link">
+                                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                                    </span>
+                                </li>
+
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% for key, value in current_filters.items %}{% if value %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Next</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% for key, value in current_filters.items %}{% if value %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Last</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% endif %}
+
+                        {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-chart-line fa-4x text-muted mb-3"></i>
+                            <h4 class="text-muted">No climate data found</h4>
+                            <p class="text-muted">No data matches your current filter criteria.</p>
+                            <a href="?" class="btn btn-climate-primary">Clear Filters</a>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Chart View -->
+                    <div id="chartView" style="display: none;">
+                        <div class="text-center py-5">
+                            <i class="fas fa-chart-area fa-4x text-muted mb-3"></i>
+                            <h4 class="text-muted">Chart View</h4>
+                            <p class="text-muted">Interactive data visualization will be displayed here.</p>
+                            <button class="btn btn-climate-primary" onclick="loadChart()">Load Chart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Data Details Modal -->
+<div class="modal fade" id="dataDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Climate Data Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dataDetailsContent">
+                    <div class="text-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleView(viewType) {
+    const tableView = document.getElementById('tableView');
+    const chartView = document.getElementById('chartView');
+    const tableBtn = document.getElementById('tableViewBtn');
+    const chartBtn = document.getElementById('chartViewBtn');
+    
+    if (viewType === 'table') {
+        tableView.style.display = 'block';
+        chartView.style.display = 'none';
+        tableBtn.classList.add('active');
+        chartBtn.classList.remove('active');
+    } else {
+        tableView.style.display = 'none';
+        chartView.style.display = 'block';
+        tableBtn.classList.remove('active');
+        chartBtn.classList.add('active');
+    }
+}
+
+function viewDataDetails(dataId) {
+    const modal = new bootstrap.Modal(document.getElementById('dataDetailsModal'));
+    modal.show();
+    
+    setTimeout(() => {
+        document.getElementById('dataDetailsContent').innerHTML = `
+            <div class="alert alert-info">
+                <h6>Climate Data Record ID: ${dataId}</h6>
+                <p>Detailed data information would be loaded here, including:</p>
+                <ul>
+                    <li>Complete measurement context and metadata</li>
+                    <li>Data collection parameters and conditions</li>
+                    <li>Quality assessment details and validation results</li>
+                    <li>Historical context and trend analysis</li>
+                    <li>Related measurements and correlations</li>
+                    <li>Processing history and transformations</li>
+                </ul>
+            </div>
+        `;
+    }, 1000);
+}
+
+function showOnMap(lat, lon) {
+    alert(`Show location on map: ${lat}, ${lon}\n\nMap integration coming soon!`);
+}
+
+function exportData() {
+    alert('Data export functionality coming soon!\n\nThis will allow you to export filtered data in various formats (CSV, JSON, Excel).');
+}
+
+function refreshData() {
+    location.reload();
+}
+
+function loadChart() {
+    alert('Interactive chart loading functionality coming soon!\n\nThis will display real-time climate data visualizations.');
+}
+
+// Initialize table view as active
+document.getElementById('tableViewBtn').classList.add('active');
+
+// Auto-refresh data every 60 seconds
+setInterval(() => {
+    if (document.visibilityState === 'visible') {
+        // Only refresh if no modal is open
+        if (!document.querySelector('.modal.show')) {
+            location.reload();
+        }
+    }
+}, 60000);
+</script>
+{% endblock %}

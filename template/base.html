@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EarthScape Climate Agency{% endblock %}</title>
+    
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Plotly.js for advanced charts -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static '/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static '/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Custom Climate Theme CSS -->
+    <style>
+        :root {
+            --climate-primary: #2E8B57;
+            --climate-secondary: #4682B4;
+            --climate-success: #228B22;
+            --climate-warning: #FF8C00;
+            --climate-danger: #DC143C;
+            --climate-info: #20B2AA;
+            --climate-light: #F0F8FF;
+            --climate-dark: #2F4F4F;
+        }
+        
+        .navbar-climate {
+            background: linear-gradient(135deg, var(--climate-primary), var(--climate-secondary));
+        }
+        
+        .btn-climate-primary {
+            background-color: var(--climate-primary);
+            border-color: var(--climate-primary);
+            color: white;
+        }
+        
+        .btn-climate-primary:hover {
+            background-color: #236B47;
+            border-color: #236B47;
+        }
+        
+        .alert-climate {
+            border-left: 4px solid var(--climate-primary);
+        }
+        
+        .card-climate {
+            border-top: 3px solid var(--climate-primary);
+        }
+        
+        .text-climate-primary {
+            color: var(--climate-primary) !important;
+        }
+        
+        .bg-climate-light {
+            background-color: var(--climate-light) !important;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="bg-light">
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-climate shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+                <i class="fas fa-globe-americas me-2 fs-4"></i>
+                <span class="fw-bold">EarthScape Climate Agency</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    
+                    {% if user.has_analyst_access %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dataDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-database me-1"></i>Data Management
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'data_sources' %}">Data Sources</a></li>
+                            <li><a class="dropdown-item" href="{% url 'climate_data' %}">Climate Data</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'alerts' %}">
+                            <i class="fas fa-exclamation-triangle me-1"></i>Alerts
+                            {% if alert_count %}
+                            <span class="badge bg-danger">{{ alert_count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'support_tickets' %}">
+                            <i class="fas fa-life-ring me-1"></i>Support
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i>{{ user.get_full_name|default:user.username }}
+                            <span class="badge bg-secondary ms-1">{{ user.get_role_display }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                {% else %}
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light ms-2" href="{% url 'login' %}">Login</a>
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Alert Messages -->
+    {% if messages %}
+    <div class="container-fluid mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <i class="fas fa-info-circle me-2"></i>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main content area -->
+    {% block content %}
+    <!-- Content from other templates will go here -->
+    {% endblock %}
+
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col_1">
+                    <img class="footer-logo" src="../static/images/logo.png" width="260px" alt="">
+                    <p class="mt-4 pe-5">Dedicated to monitoring and addressing climate change through advanced data analytics, 
+                        machine learning, and comprehensive environmental monitoring systems. Together, we're 
+                        building a sustainable future through data-driven insights.</p>
+                </div>
+                <div class="col-lg-2 col-md-2 pt-3">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                        <li><a href="{% url 'climate_data' %}">Climate Data</a></li>
+                        <li><a href="{% url 'alerts' %}">Alerts</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-2 pt-3">
+                    <h5>Climate Services</h5>
+                    <ul>
+                        <li><a href="{% url 'data_sources' %}">Data Sources</a></li>
+                        <li><a href="{% url 'support_tickets' %}">Support</a></li>
+                        <li><a href="{% url 'ml_models' %}">ML Models</a></li>
+                        <li><a href="#">API Access</a></li>
+                    </ul>
+                </div>
+                <div class="pt-3 col-lg-3 col-md-3 col_4">
+                    <h5>Contact Info</h5>
+                    <ul>
+                        <li>Global Climate Research Center</li>
+                        <li>contact@earthscape-climate.org</li>
+                        <li>+1 (555) CLIMATE</li>
+                    </ul>
+
+                    <div class="icons mt-lg-4 mt-3 ">
+                        <a href="">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-twitter"></i>    
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row copy-right">
+                <div class="col-lg-8">
+                    <p>© 2024 EarthScape Climate Agency | Committed to environmental data transparency and climate action. All Rights Reserved
+                    </p>
+                </div>
+                <div class="col-lg-4 d-flex justify-content-lg-end justify-content-center">
+                    <p>Privacy Policy | Report</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer end -->
+
+    <!-- ////// Links ////// -->
+    <!-- Boostrap 5 cdn js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static '/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static '/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static '/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static '/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static '/js/main.js' %}"></script>
+</body>
+
+</html>

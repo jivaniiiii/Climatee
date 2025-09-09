@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+
+{% block title %}Data Sources - EarthScape Climate Agency{% endblock %}
+
+{% block extra_css %}
+<style>
+    .source-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .source-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .status-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .status-active { background-color: #28a745; }
+    .status-inactive { background-color: #dc3545; }
+    .source-type-badge {
+        font-size: 0.75rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-0 text-climate-primary">
+                        <i class="fas fa-satellite me-2"></i>Data Sources
+                    </h1>
+                    <p class="text-muted mb-0">Manage climate data collection sources and monitoring stations</p>
+                </div>
+                <div>
+                    <button class="btn btn-climate-primary" onclick="alert('Add new data source functionality coming soon!')">
+                        <i class="fas fa-plus me-1"></i>Add Data Source
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-primary">
+                <div class="card-body">
+                    <i class="fas fa-database fa-2x text-primary mb-2"></i>
+                    <h4 class="text-primary">{{ total_sources }}</h4>
+                    <small class="text-muted">Total Sources</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-success">
+                <div class="card-body">
+                    <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                    <h4 class="text-success">-</h4>
+                    <small class="text-muted">Active Sources</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-warning">
+                <div class="card-body">
+                    <i class="fas fa-satellite fa-2x text-warning mb-2"></i>
+                    <h4 class="text-warning">-</h4>
+                    <small class="text-muted">Satellites</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-info">
+                <div class="card-body">
+                    <i class="fas fa-thermometer-half fa-2x text-info mb-2"></i>
+                    <h4 class="text-info">-</h4>
+                    <small class="text-muted">Weather Stations</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters and Search -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card card-climate">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-4">
+                            <label for="search" class="form-label">Search Sources</label>
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Search by name or location...">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="source_type" class="form-label">Source Type</label>
+                            <select class="form-select" id="source_type" name="source_type">
+                                <option value="">All Types</option>
+                                <option value="satellite">Satellite Imagery</option>
+                                <option value="weather_station">Weather Station</option>
+                                <option value="sensor">Environmental Sensor</option>
+                                <option value="ocean_buoy">Ocean Buoy</option>
+                                <option value="air_quality">Air Quality Monitor</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-climate-primary w-100">
+                                <i class="fas fa-search me-1"></i>Filter
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Sources List -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-climate">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-list me-2"></i>Data Sources
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if page_obj %}
+                    <div class="row">
+                        {% for source in page_obj %}
+                        <div class="col-lg-6 col-xl-4 mb-4">
+                            <div class="card source-card h-100">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <span class="status-indicator {% if source.is_active %}status-active{% else %}status-inactive{% endif %} me-2"></span>
+                                        <h6 class="mb-0">{{ source.name }}</h6>
+                                    </div>
+                                    <span class="badge source-type-badge 
+                                        {% if source.source_type == 'satellite' %}bg-primary
+                                        {% elif source.source_type == 'weather_station' %}bg-info
+                                        {% elif source.source_type == 'sensor' %}bg-success
+                                        {% elif source.source_type == 'ocean_buoy' %}bg-warning
+                                        {% else %}bg-secondary{% endif %}">
+                                        {{ source.get_source_type_display }}
+                                    </span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">Location</small>
+                                        <span class="fw-bold">
+                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                            {{ source.location_lat|floatformat:4 }}, {{ source.location_lon|floatformat:4 }}
+                                        </span>
+                                        {% if source.altitude %}
+                                        <br><small class="text-muted">Altitude: {{ source.altitude }}m</small>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">Installation Date</small>
+                                        <span>{{ source.installation_date|date:"M d, Y" }}</span>
+                                    </div>
+                                    
+                                    {% if source.last_maintenance %}
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">Last Maintenance</small>
+                                        <span>{{ source.last_maintenance|date:"M d, Y" }}</span>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">Status</small>
+                                        {% if source.is_active %}
+                                            <span class="badge bg-success">Active</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Inactive</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent">
+                                    <div class="btn-group w-100" role="group">
+                                        <button class="btn btn-outline-primary btn-sm" onclick="viewSourceDetails('{{ source.id }}')">
+                                            <i class="fas fa-eye me-1"></i>Details
+                                        </button>
+                                        <button class="btn btn-outline-info btn-sm" onclick="viewSourceData('{{ source.id }}')">
+                                            <i class="fas fa-chart-line me-1"></i>Data
+                                        </button>
+                                        <button class="btn btn-outline-secondary btn-sm" onclick="editSource('{{ source.id }}')">
+                                            <i class="fas fa-edit me-1"></i>Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if page_obj.has_other_pages %}
+                    <nav aria-label="Data sources pagination" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1">First</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                </li>
+                            {% endif %}
+
+                            <li class="page-item active">
+                                <span class="page-link">
+                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                                </span>
+                            </li>
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-satellite fa-4x text-muted mb-3"></i>
+                        <h4 class="text-muted">No data sources found</h4>
+                        <p class="text-muted">No data sources have been configured yet.</p>
+                        <button class="btn btn-climate-primary" onclick="alert('Add new data source functionality coming soon!')">
+                            <i class="fas fa-plus me-1"></i>Add First Data Source
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Source Details Modal -->
+<div class="modal fade" id="sourceDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Data Source Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="sourceDetailsContent">
+                    <div class="text-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function viewSourceDetails(sourceId) {
+    const modal = new bootstrap.Modal(document.getElementById('sourceDetailsModal'));
+    modal.show();
+    
+    setTimeout(() => {
+        document.getElementById('sourceDetailsContent').innerHTML = `
+            <div class="alert alert-info">
+                <h6>Data Source ID: ${sourceId}</h6>
+                <p>Detailed source information would be loaded here, including:</p>
+                <ul>
+                    <li>Complete technical specifications</li>
+                    <li>Data collection parameters</li>
+                    <li>Maintenance history and schedules</li>
+                    <li>Performance metrics and uptime</li>
+                    <li>Recent data quality assessments</li>
+                    <li>Geographic and environmental context</li>
+                </ul>
+            </div>
+        `;
+    }, 1000);
+}
+
+function viewSourceData(sourceId) {
+    // Redirect to climate data page filtered by this source
+    window.location.href = '{% url "climate_data" %}?source_id=' + sourceId;
+}
+
+function editSource(sourceId) {
+    alert('Edit data source functionality coming soon!\nSource ID: ' + sourceId);
+}
+
+// Initialize tooltips
+document.addEventListener('DOMContentLoaded', function() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+</script>
+{% endblock %}

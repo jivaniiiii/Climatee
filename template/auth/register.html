@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register - EarthScape Climate Agency{% endblock %}
+
+{% block extra_css %}
+<style>
+    .register-container {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #2E8B57 0%, #4682B4 100%);
+        padding: 2rem 0;
+    }
+    
+    .register-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+    
+    .climate-icon {
+        background: linear-gradient(135deg, #2E8B57, #4682B4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .form-control:focus {
+        border-color: #2E8B57;
+        box-shadow: 0 0 0 0.2rem rgba(46, 139, 87, 0.25);
+    }
+    
+    .btn-climate {
+        background: linear-gradient(135deg, #2E8B57, #4682B4);
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-climate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(46, 139, 87, 0.4);
+    }
+    
+    .role-info {
+        background: linear-gradient(135deg, rgba(46, 139, 87, 0.1), rgba(70, 130, 180, 0.1));
+        border-left: 4px solid #2E8B57;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="register-container d-flex align-items-center justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="register-card p-5">
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <i class="fas fa-globe-americas climate-icon" style="font-size: 3.5rem;"></i>
+                        <h2 class="mt-3 mb-2 fw-bold text-dark">Join Our Mission</h2>
+                        <p class="text-muted">Create your EarthScape Climate Agency account</p>
+                    </div>
+
+                    <!-- Registration Form -->
+                    <form method="post" action="{% url 'register' %}">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="first_name" class="form-label fw-semibold">
+                                    <i class="fas fa-user me-2"></i>First Name
+                                </label>
+                                <input type="text" class="form-control" id="first_name" 
+                                       name="first_name" required placeholder="Enter first name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="last_name" class="form-label fw-semibold">
+                                    <i class="fas fa-user me-2"></i>Last Name
+                                </label>
+                                <input type="text" class="form-control" id="last_name" 
+                                       name="last_name" required placeholder="Enter last name">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label fw-semibold">
+                                <i class="fas fa-at me-2"></i>Username
+                            </label>
+                            <input type="text" class="form-control" id="username" 
+                                   name="username" required placeholder="Choose a username">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-semibold">
+                                <i class="fas fa-envelope me-2"></i>Email Address
+                            </label>
+                            <input type="email" class="form-control" id="email" 
+                                   name="email" required placeholder="Enter your email">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="organization" class="form-label fw-semibold">
+                                <i class="fas fa-building me-2"></i>Organization (Optional)
+                            </label>
+                            <input type="text" class="form-control" id="organization" 
+                                   name="organization" placeholder="Your organization or institution">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label fw-semibold">
+                                <i class="fas fa-phone me-2"></i>Phone Number (Optional)
+                            </label>
+                            <input type="tel" class="form-control" id="phone" 
+                                   name="phone" placeholder="Your phone number">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label fw-semibold">
+                                <i class="fas fa-lock me-2"></i>Password
+                            </label>
+                            <input type="password" class="form-control" id="password" 
+                                   name="password" required placeholder="Create a strong password">
+                            <div class="form-text">
+                                Password should be at least 8 characters long and include numbers and special characters.
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="confirm_password" class="form-label fw-semibold">
+                                <i class="fas fa-lock me-2"></i>Confirm Password
+                            </label>
+                            <input type="password" class="form-control" id="confirm_password" 
+                                   name="confirm_password" required placeholder="Confirm your password">
+                        </div>
+
+                        <!-- Role Information -->
+                        <div class="role-info p-3 rounded mb-4">
+                            <h6 class="mb-2">
+                                <i class="fas fa-info-circle me-2"></i>Account Access Level
+                            </h6>
+                            <p class="small mb-0 text-muted">
+                                New accounts are created with <strong>Viewer</strong> access by default. 
+                                This allows you to view climate data, alerts, and basic analytics. 
+                                Contact your administrator for elevated permissions.
+                            </p>
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> 
+                                and <a href="#" class="text-decoration-none">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="newsletter">
+                            <label class="form-check-label" for="newsletter">
+                                Subscribe to climate updates and research notifications
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-climate btn-lg w-100 text-white mb-3">
+                            <i class="fas fa-user-plus me-2"></i>Create Account
+                        </button>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <!-- Login Link -->
+                    <div class="text-center">
+                        <p class="text-muted mb-2">Already have an account?</p>
+                        <a href="{% url 'login' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mission Statement -->
+                <div class="text-center mt-4">
+                    <div class="card bg-transparent border-0">
+                        <div class="card-body text-white">
+                            <h6 class="mb-2">
+                                <i class="fas fa-seedling me-2"></i>Our Mission
+                            </h6>
+                            <p class="small mb-0">
+                                "Empowering climate action through data-driven insights and collaborative 
+                                research. Together, we can build a sustainable future for our planet."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Password confirmation validation
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm_password');
+    
+    function validatePassword() {
+        if (password.value !== confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords don't match");
+        } else {
+            confirmPassword.setCustomValidity('');
+        }
+    }
+    
+    password.addEventListener('change', validatePassword);
+    confirmPassword.addEventListener('keyup', validatePassword);
+    
+    // Add loading state to submit button
+    const form = document.querySelector('form');
+    const submitBtn = document.querySelector('button[type="submit"]');
+    
+    form.addEventListener('submit', function(e) {
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            return;
+        }
+        
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
+        submitBtn.disabled = true;
+    });
+    
+    // Username availability check (placeholder for future implementation)
+    const username = document.getElementById('username');
+    username.addEventListener('blur', function() {
+        // Future: Add AJAX call to check username availability
+    });
+});
+</script>
+{% endblock %}

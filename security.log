@@ -1,0 +1,5 @@
+WARNING 2025-09-08 17:29:15,460 log 1623 130177975711424 Forbidden (Origin checking failed - https://work-1-ycmjkixljzsamnoi.prod-runtime.all-hands.dev does not match any trusted origins.): /register/
+WARNING 2025-09-08 17:32:02,846 log 1623 130177975711424 Forbidden (Origin checking failed - https://work-1-ycmjkixljzsamnoi.prod-runtime.all-hands.dev does not match any trusted origins.): /register/
+WARNING 2025-09-08 17:32:44,748 log 1623 130177975711424 Forbidden (Origin checking failed - https://work-1-ycmjkixljzsamnoi.prod-runtime.all-hands.dev does not match any trusted origins.): /login/
+WARNING 2025-09-08 17:33:00,786 log 1623 130177975711424 Forbidden (Origin checking failed - https://work-1-ycmjkixljzsamnoi.prod-runtime.all-hands.dev does not match any trusted origins.): /login/
+WARNING 2025-09-08 20:35:59,641 log 1628 125929271568064 Forbidden (Origin checking failed - https://work-1-mzyrtyrutnzmbygn.prod-runtime.all-hands.dev does not match any trusted origins.): /login/

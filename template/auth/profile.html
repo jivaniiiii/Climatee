@@ -1,0 +1,373 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile - EarthScape Climate Agency{% endblock %}
+
+{% block extra_css %}
+<style>
+    .profile-card {
+        border-top: 4px solid var(--climate-primary);
+    }
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--climate-primary), var(--climate-secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 3rem;
+        font-weight: bold;
+    }
+    .role-badge {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+    .activity-item {
+        border-left: 3px solid var(--climate-primary);
+        padding-left: 1rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-0 text-climate-primary">
+                        <i class="fas fa-user-circle me-2"></i>User Profile
+                    </h1>
+                    <p class="text-muted mb-0">Manage your account information and preferences</p>
+                </div>
+                <div>
+                    <button class="btn btn-climate-primary" onclick="editProfile()">
+                        <i class="fas fa-edit me-1"></i>Edit Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Profile Information -->
+        <div class="col-lg-4 mb-4">
+            <div class="card profile-card">
+                <div class="card-body text-center">
+                    <div class="profile-avatar mx-auto mb-3">
+                        {{ user.first_name|first|default:user.username|first }}{{ user.last_name|first|default:"" }}
+                    </div>
+                    <h4 class="mb-1">{{ user.get_full_name|default:user.username }}</h4>
+                    <p class="text-muted mb-3">{{ user.email }}</p>
+                    <span class="badge role-badge bg-primary">{{ user.get_role_display }}</span>
+                    {% if user.organization %}
+                    <p class="text-muted mt-2 mb-0">
+                        <i class="fas fa-building me-1"></i>{{ user.organization }}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Account Statistics -->
+            <div class="card card-climate mt-4">
+                <div class="card-header bg-climate-light">
+                    <h6 class="card-title mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>Account Statistics
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-6 border-end">
+                            <h4 class="text-primary">{{ user.date_joined|timesince }}</h4>
+                            <small class="text-muted">Member Since</small>
+                        </div>
+                        <div class="col-6">
+                            <h4 class="text-success">{{ user.last_login|timesince|default:"Never" }}</h4>
+                            <small class="text-muted">Last Login</small>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row text-center">
+                        <div class="col-6 border-end">
+                            <h4 class="text-info">-</h4>
+                            <small class="text-muted">Support Tickets</small>
+                        </div>
+                        <div class="col-6">
+                            <h4 class="text-warning">-</h4>
+                            <small class="text-muted">Data Exports</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Details and Settings -->
+        <div class="col-lg-8">
+            <!-- Personal Information -->
+            <div class="card card-climate mb-4">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-user me-2"></i>Personal Information
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">First Name</label>
+                            <p class="fw-bold">{{ user.first_name|default:"Not provided" }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Last Name</label>
+                            <p class="fw-bold">{{ user.last_name|default:"Not provided" }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Username</label>
+                            <p class="fw-bold">{{ user.username }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Email Address</label>
+                            <p class="fw-bold">{{ user.email }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Phone Number</label>
+                            <p class="fw-bold">{{ user.phone|default:"Not provided" }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Organization</label>
+                            <p class="fw-bold">{{ user.organization|default:"Not provided" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Security -->
+            <div class="card card-climate mb-4">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-shield-alt me-2"></i>Account Security
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Account Status</label>
+                            <p>
+                                {% if user.is_active %}
+                                <span class="badge bg-success">Active</span>
+                                {% else %}
+                                <span class="badge bg-danger">Inactive</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Role</label>
+                            <p><span class="badge bg-primary">{{ user.get_role_display }}</span></p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Last Login IP</label>
+                            <p class="fw-bold">{{ user.last_login_ip|default:"Not available" }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Session Status</label>
+                            <p>
+                                {% if user.is_active_session %}
+                                <span class="badge bg-success">Active Session</span>
+                                {% else %}
+                                <span class="badge bg-secondary">No Active Session</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-outline-warning me-2" onclick="changePassword()">
+                            <i class="fas fa-key me-1"></i>Change Password
+                        </button>
+                        <button class="btn btn-outline-info" onclick="viewSecurityLog()">
+                            <i class="fas fa-history me-1"></i>Security Log
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permissions and Access -->
+            <div class="card card-climate mb-4">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-key me-2"></i>Permissions & Access
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-muted mb-3">System Access</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>Dashboard Access
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>Climate Data Viewing
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>Alert Notifications
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>Support System
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-muted mb-3">Advanced Features</h6>
+                            <ul class="list-unstyled">
+                                {% if user.has_analyst_access %}
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>Data Management
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>Data Analysis Tools
+                                </li>
+                                {% else %}
+                                <li class="mb-2">
+                                    <i class="fas fa-times-circle text-muted me-2"></i>Data Management
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-times-circle text-muted me-2"></i>Data Analysis Tools
+                                </li>
+                                {% endif %}
+                                
+                                {% if user.has_admin_access %}
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>System Administration
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>User Management
+                                </li>
+                                {% else %}
+                                <li class="mb-2">
+                                    <i class="fas fa-times-circle text-muted me-2"></i>System Administration
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-times-circle text-muted me-2"></i>User Management
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card card-climate">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-history me-2"></i>Recent Activity
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="activity-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Logged into system</h6>
+                                <small class="text-muted">Accessed dashboard and viewed climate data</small>
+                            </div>
+                            <small class="text-muted">{{ user.last_login|timesince }} ago</small>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Account created</h6>
+                                <small class="text-muted">Joined EarthScape Climate Agency</small>
+                            </div>
+                            <small class="text-muted">{{ user.date_joined|timesince }} ago</small>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <button class="btn btn-outline-primary btn-sm" onclick="viewFullActivity()">
+                            <i class="fas fa-list me-1"></i>View Full Activity Log
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editFirstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="editFirstName" value="{{ user.first_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editLastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="editLastName" value="{{ user.last_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editEmail" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="editEmail" value="{{ user.email }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="editPhone" value="{{ user.phone }}">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="editOrganization" class="form-label">Organization</label>
+                            <input type="text" class="form-control" id="editOrganization" value="{{ user.organization }}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-climate-primary" onclick="saveProfile()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function editProfile() {
+    const modal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+    modal.show();
+}
+
+function saveProfile() {
+    alert('Profile update functionality coming soon!\n\nThis will allow you to update your personal information.');
+    bootstrap.Modal.getInstance(document.getElementById('editProfileModal')).hide();
+}
+
+function changePassword() {
+    alert('Change password functionality coming soon!\n\nThis will allow you to update your account password securely.');
+}
+
+function viewSecurityLog() {
+    alert('Security log functionality coming soon!\n\nThis will show your recent login attempts and security events.');
+}
+
+function viewFullActivity() {
+    alert('Full activity log functionality coming soon!\n\nThis will show your complete activity history on the platform.');
+}
+
+// Initialize tooltips
+document.addEventListener('DOMContentLoaded', function() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+</script>
+{% endblock %}

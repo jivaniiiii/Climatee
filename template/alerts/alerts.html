@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+
+{% block title %}Climate Alerts - EarthScape Climate Agency{% endblock %}
+
+{% block extra_css %}
+<style>
+    .alert-item {
+        border-left: 4px solid;
+        transition: transform 0.2s;
+    }
+    .alert-item:hover {
+        transform: translateX(5px);
+    }
+    .alert-critical { border-left-color: #dc3545; }
+    .alert-high { border-left-color: #fd7e14; }
+    .alert-medium { border-left-color: #ffc107; }
+    .alert-low { border-left-color: #28a745; }
+    
+    .severity-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-0 text-climate-primary">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Climate Alerts
+                    </h1>
+                    <p class="text-muted mb-0">Monitor and manage climate-related alerts and notifications</p>
+                </div>
+                <div>
+                    <div class="btn-group" role="group">
+                        <a href="?status=active" class="btn btn-outline-primary {% if status_filter == 'active' %}active{% endif %}">
+                            Active Alerts
+                        </a>
+                        <a href="?status=resolved" class="btn btn-outline-secondary {% if status_filter == 'resolved' %}active{% endif %}">
+                            Resolved
+                        </a>
+                        <a href="?" class="btn btn-outline-info {% if not status_filter %}active{% endif %}">
+                            All Alerts
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-danger">
+                <div class="card-body">
+                    <i class="fas fa-exclamation-circle fa-2x text-danger mb-2"></i>
+                    <h4 class="text-danger">{{ page_obj.paginator.count }}</h4>
+                    <small class="text-muted">Total Alerts</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-warning">
+                <div class="card-body">
+                    <i class="fas fa-clock fa-2x text-warning mb-2"></i>
+                    <h4 class="text-warning">-</h4>
+                    <small class="text-muted">Pending Review</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-success">
+                <div class="card-body">
+                    <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                    <h4 class="text-success">-</h4>
+                    <small class="text-muted">Resolved Today</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-info">
+                <div class="card-body">
+                    <i class="fas fa-chart-line fa-2x text-info mb-2"></i>
+                    <h4 class="text-info">-</h4>
+                    <small class="text-muted">This Week</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alerts List -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-climate">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-list me-2"></i>Alert List
+                        {% if status_filter %}
+                        <span class="badge bg-secondary ms-2">{{ status_filter|title }}</span>
+                        {% endif %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if page_obj %}
+                    <div class="list-group list-group-flush">
+                        {% for alert in page_obj %}
+                        <div class="list-group-item alert-item alert-{{ alert.severity }} px-0 py-3">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <div class="d-flex align-items-start">
+                                        <div class="me-3">
+                                            {% if alert.severity == 'critical' %}
+                                                <i class="fas fa-exclamation-circle fa-2x text-danger"></i>
+                                            {% elif alert.severity == 'high' %}
+                                                <i class="fas fa-exclamation-triangle fa-2x text-warning"></i>
+                                            {% elif alert.severity == 'medium' %}
+                                                <i class="fas fa-info-circle fa-2x text-info"></i>
+                                            {% else %}
+                                                <i class="fas fa-check-circle fa-2x text-success"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1 fw-bold">{{ alert.title }}</h6>
+                                            <p class="mb-2 text-muted">{{ alert.description }}</p>
+                                            <div class="d-flex flex-wrap gap-2 small text-muted">
+                                                <span>
+                                                    <i class="fas fa-clock me-1"></i>{{ alert.created_at|timesince }} ago
+                                                </span>
+                                                {% if alert.data_source %}
+                                                <span>
+                                                    <i class="fas fa-satellite me-1"></i>{{ alert.data_source.name }}
+                                                </span>
+                                                {% endif %}
+                                                {% if alert.actual_value and alert.threshold_value %}
+                                                <span>
+                                                    <i class="fas fa-chart-line me-1"></i>{{ alert.actual_value }} (threshold: {{ alert.threshold_value }})
+                                                </span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <div class="mb-2">
+                                        <span class="badge severity-badge 
+                                            {% if alert.severity == 'critical' %}bg-danger
+                                            {% elif alert.severity == 'high' %}bg-warning
+                                            {% elif alert.severity == 'medium' %}bg-info
+                                            {% else %}bg-success{% endif %}">
+                                            {{ alert.get_severity_display }}
+                                        </span>
+                                        <span class="badge bg-secondary ms-1">{{ alert.get_alert_type_display }}</span>
+                                    </div>
+                                    
+                                    {% if alert.is_active %}
+                                        <div class="btn-group btn-group-sm">
+                                            {% if user.has_analyst_access %}
+                                            <form method="post" action="{% url 'acknowledge_alert' alert.id %}" class="d-inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-outline-success btn-sm">
+                                                    <i class="fas fa-check me-1"></i>Acknowledge
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                            <button class="btn btn-outline-info btn-sm" onclick="viewAlertDetails('{{ alert.id }}')">
+                                                <i class="fas fa-eye me-1"></i>Details
+                                            </button>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-success small">
+                                            <i class="fas fa-check-circle me-1"></i>
+                                            {% if alert.acknowledged_by %}
+                                                Acknowledged by {{ alert.acknowledged_by.get_full_name|default:alert.acknowledged_by.username }}
+                                                <br><small>{{ alert.acknowledged_at|timesince }} ago</small>
+                                            {% else %}
+                                                Resolved
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if page_obj.has_other_pages %}
+                    <nav aria-label="Alert pagination" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1{% if status_filter %}&status={{ status_filter }}{% endif %}">First</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}">Previous</a>
+                                </li>
+                            {% endif %}
+
+                            <li class="page-item active">
+                                <span class="page-link">
+                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                                </span>
+                            </li>
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}">Next</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if status_filter %}&status={{ status_filter }}{% endif %}">Last</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                        <h4 class="text-muted">No alerts found</h4>
+                        <p class="text-muted">
+                            {% if status_filter == 'active' %}
+                                There are no active alerts at this time.
+                            {% elif status_filter == 'resolved' %}
+                                No resolved alerts to display.
+                            {% else %}
+                                No alerts have been generated yet.
+                            {% endif %}
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Alert Details Modal -->
+<div class="modal fade" id="alertDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Alert Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="alertDetailsContent">
+                    <div class="text-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function viewAlertDetails(alertId) {
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('alertDetailsModal'));
+    modal.show();
+    
+    // Simulate loading alert details
+    setTimeout(() => {
+        document.getElementById('alertDetailsContent').innerHTML = `
+            <div class="alert alert-info">
+                <h6>Alert ID: ${alertId}</h6>
+                <p>Detailed alert information would be loaded here from the server.</p>
+                <p>This would include:</p>
+                <ul>
+                    <li>Full alert description and context</li>
+                    <li>Related data points and measurements</li>
+                    <li>Historical context and trends</li>
+                    <li>Recommended actions</li>
+                    <li>Related alerts and patterns</li>
+                </ul>
+            </div>
+        `;
+    }, 1000);
+}
+
+// Auto-refresh alerts every 30 seconds for active alerts
+{% if status_filter == 'active' %}
+setInterval(() => {
+    // Only refresh if user is still on the page
+    if (document.visibilityState === 'visible') {
+        location.reload();
+    }
+}, 30000);
+{% endif %}
+</script>
+{% endblock %}

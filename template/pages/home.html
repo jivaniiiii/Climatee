@@ -1,0 +1,305 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}EarthScape Climate Agency - Global Climate Monitoring & Analysis{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(46, 139, 87, 0.9), rgba(70, 130, 180, 0.9)), 
+                    url('{% static "images/climate-hero-bg.jpg" %}') center/cover;
+        min-height: 80vh;
+        color: white;
+    }
+    
+    .stats-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #2E8B57, #4682B4);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+    }
+    
+    .climate-gradient {
+        background: linear-gradient(135deg, #2E8B57, #4682B4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section d-flex align-items-center">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-3 fw-bold mb-4">
+                    EarthScape Climate Agency
+                </h1>
+                <p class="lead mb-4">
+                    Advanced climate monitoring and analysis platform powered by machine learning. 
+                    Monitor global climate patterns, detect anomalies, and predict future trends 
+                    with our comprehensive data analytics suite.
+                </p>
+                <div class="d-flex gap-3 mb-4">
+                    <a href="{% url 'register' %}" class="btn btn-light btn-lg px-4">
+                        <i class="fas fa-rocket me-2"></i>Get Started
+                    </a>
+                    <a href="{% url 'about' %}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-info-circle me-2"></i>Learn More
+                    </a>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="row mt-5">
+                    <div class="col-4 text-center">
+                        <h3 class="fw-bold">{{ total_data_sources }}+</h3>
+                        <small>Data Sources</small>
+                    </div>
+                    <div class="col-4 text-center">
+                        <h3 class="fw-bold">{{ total_climate_data|floatformat:0 }}+</h3>
+                        <small>Data Points</small>
+                    </div>
+                    <div class="col-4 text-center">
+                        <h3 class="fw-bold">24/7</h3>
+                        <small>Monitoring</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <div class="position-relative">
+                        <i class="fas fa-globe-americas" style="font-size: 15rem; opacity: 0.3;"></i>
+                        <div class="position-absolute top-50 start-50 translate-middle">
+                            <div class="stats-card p-4 text-dark">
+                                <h5 class="climate-gradient fw-bold mb-2">Live Climate Data</h5>
+                                <div class="row text-center">
+                                    <div class="col-6">
+                                        <h6 class="text-primary mb-1">+1.1°C</h6>
+                                        <small class="text-muted">Global Temp</small>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6 class="text-warning mb-1">421 ppm</h6>
+                                        <small class="text-muted">CO₂ Level</small>
+                                    </div>
+                                </div>
+                                {% if active_alerts > 0 %}
+                                <div class="mt-2">
+                                    <span class="badge bg-warning">{{ active_alerts }} Active Alert{{ active_alerts|pluralize }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="display-5 fw-bold climate-gradient mb-3">
+                    Comprehensive Climate Intelligence
+                </h2>
+                <p class="lead text-muted">
+                    Our platform integrates data from multiple sources to provide actionable climate insights
+                </p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-satellite fa-2x text-white"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Global Data Collection</h5>
+                    <p class="text-muted">
+                        Real-time data from satellites, weather stations, ocean buoys, 
+                        and environmental sensors worldwide.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain fa-2x text-white"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">AI-Powered Analysis</h5>
+                    <p class="text-muted">
+                        Machine learning algorithms for anomaly detection, trend prediction, 
+                        and pattern recognition in climate data.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-exclamation-triangle fa-2x text-white"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Real-time Alerts</h5>
+                    <p class="text-muted">
+                        Automated notifications for climate anomalies, extreme weather events, 
+                        and environmental threshold breaches.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line fa-2x text-white"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Interactive Dashboards</h5>
+                    <p class="text-muted">
+                        Comprehensive visualization tools for exploring climate data, 
+                        trends, and predictive modeling results.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-users fa-2x text-white"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Collaborative Platform</h5>
+                    <p class="text-muted">
+                        Multi-user environment supporting researchers, analysts, and decision-makers 
+                        with role-based access control.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt fa-2x text-white"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Secure & Compliant</h5>
+                    <p class="text-muted">
+                        Enterprise-grade security with data encryption and compliance 
+                        with environmental data standards.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Data Section -->
+{% if recent_data %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h3 class="fw-bold climate-gradient mb-3">Latest Climate Data</h3>
+                <p class="text-muted">Real-time updates from our global monitoring network</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for data in recent_data %}
+            <div class="col-lg-4 col-md-6 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-thermometer-half text-primary me-2"></i>
+                            <h6 class="card-title mb-0">{{ data.get_data_type_display }}</h6>
+                        </div>
+                        <h4 class="text-primary mb-2">{{ data.value }} {{ data.unit }}</h4>
+                        <p class="card-text small text-muted mb-1">
+                            <i class="fas fa-map-marker-alt me-1"></i>{{ data.data_source.name }}
+                        </p>
+                        <p class="card-text small text-muted">
+                            <i class="fas fa-clock me-1"></i>{{ data.timestamp|timesince }} ago
+                        </p>
+                        {% if data.is_anomaly %}
+                        <span class="badge bg-warning">Anomaly Detected</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-sign-in-alt me-2"></i>Access Full Dashboard
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="fw-bold mb-2">Ready to Monitor Climate Change?</h3>
+                <p class="mb-0">
+                    Join researchers and organizations worldwide using our platform to understand 
+                    and address climate change through data-driven insights.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'register' %}" class="btn btn-light btn-lg me-3">
+                    <i class="fas fa-user-plus me-2"></i>Get Started
+                </a>
+                <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-envelope me-2"></i>Contact Us
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trust Indicators -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-3">
+                <h5 class="fw-bold text-primary">500+</h5>
+                <small class="text-muted">Global Data Sources</small>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h5 class="fw-bold text-primary">50+</h5>
+                <small class="text-muted">Research Institutions</small>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h5 class="fw-bold text-primary">10TB+</h5>
+                <small class="text-muted">Data Processed</small>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h5 class="fw-bold text-primary">24/7</h5>
+                <small class="text-muted">Continuous Monitoring</small>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,311 @@
+{% extends 'base.html' %}
+
+{% block title %}ML Models - EarthScape Climate Agency{% endblock %}
+
+{% block extra_css %}
+<style>
+    .model-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border-left: 4px solid var(--climate-primary);
+    }
+    .model-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .accuracy-bar {
+        height: 8px;
+        border-radius: 4px;
+        background-color: #e9ecef;
+        overflow: hidden;
+    }
+    .accuracy-fill {
+        height: 100%;
+        transition: width 0.3s ease;
+    }
+    .model-status {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-0 text-climate-primary">
+                        <i class="fas fa-brain me-2"></i>Machine Learning Models
+                    </h1>
+                    <p class="text-muted mb-0">Climate prediction and analysis models</p>
+                </div>
+                <div>
+                    <button class="btn btn-climate-primary" onclick="createNewModel()">
+                        <i class="fas fa-plus me-1"></i>Create Model
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-primary">
+                <div class="card-body">
+                    <i class="fas fa-brain fa-2x text-primary mb-2"></i>
+                    <h4 class="text-primary">{{ total_models }}</h4>
+                    <small class="text-muted">Total Models</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-success">
+                <div class="card-body">
+                    <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                    <h4 class="text-success">{{ active_models }}</h4>
+                    <small class="text-muted">Active Models</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-warning">
+                <div class="card-body">
+                    <i class="fas fa-chart-line fa-2x text-warning mb-2"></i>
+                    <h4 class="text-warning">{% if models %}{{ models|first|floatformat:1 }}%{% else %}0%{% endif %}</h4>
+                    <small class="text-muted">Best Accuracy</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-info">
+                <div class="card-body">
+                    <i class="fas fa-cogs fa-2x text-info mb-2"></i>
+                    <h4 class="text-info">{{ models|length|add:"-1" }}</h4>
+                    <small class="text-muted">In Development</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Models List -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-climate">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-list me-2"></i>Available Models
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if models %}
+                    <div class="row">
+                        {% for model in models %}
+                        <div class="col-lg-6 col-xl-4 mb-4">
+                            <div class="card model-card h-100">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">{{ model.name }}</h6>
+                                        <small class="text-muted">v{{ model.version }}</small>
+                                    </div>
+                                    <div>
+                                        <span class="badge model-status 
+                                            {% if model.is_active %}bg-success
+                                            {% else %}bg-secondary{% endif %}">
+                                            {% if model.is_active %}Active{% else %}Inactive{% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <span class="badge bg-info mb-2">{{ model.get_model_type_display }}</span>
+                                        <p class="card-text text-muted small">{{ model.description|truncatechars:120 }}</p>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <small class="text-muted">Accuracy</small>
+                                            <small class="fw-bold">{% widthratio model.accuracy_score 1 100 %}%</small>
+                                        </div>
+                                        <div class="accuracy-bar">
+                                            <div class="accuracy-fill" style="width: {% widthratio model.accuracy_score 1 100 %}%; 
+                                                background-color: {% if model.accuracy_score >= 0.9 %}#28a745
+                                                {% elif model.accuracy_score >= 0.8 %}#20c997
+                                                {% elif model.accuracy_score >= 0.7 %}#ffc107
+                                                {% else %}#dc3545{% endif %};"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row text-center mb-3">
+                                        <div class="col-6 border-end">
+                                            <small class="text-muted d-block">Created</small>
+                                            <small class="fw-bold">{{ model.created_at|timesince }} ago</small>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted d-block">Updated</small>
+                                            <small class="fw-bold">{{ model.updated_at|timesince }} ago</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">Training Period</small>
+                                        <small>{{ model.training_data_period_start|date:"M Y" }} - {{ model.training_data_period_end|date:"M Y" }}</small>
+                                    </div>
+                                    
+                                    {% if model.created_by %}
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">Created by</small>
+                                        <small>{{ model.created_by.get_full_name|default:model.created_by.username }}</small>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="card-footer bg-transparent">
+                                    <div class="btn-group w-100" role="group">
+                                        <button class="btn btn-outline-primary btn-sm" onclick="viewModelDetails('{{ model.id }}')">
+                                            <i class="fas fa-eye me-1"></i>View
+                                        </button>
+                                        {% if user.has_analyst_access %}
+                                        <button class="btn btn-outline-info btn-sm" onclick="testModel('{{ model.id }}')">
+                                            <i class="fas fa-play me-1"></i>Test
+                                        </button>
+                                        {% endif %}
+                                        {% if user.has_admin_access %}
+                                        <button class="btn btn-outline-success btn-sm" onclick="deployModel('{{ model.id }}')">
+                                            <i class="fas fa-rocket me-1"></i>Deploy
+                                        </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-brain fa-4x text-muted mb-3"></i>
+                        <h4 class="text-muted">No ML Models Found</h4>
+                        <p class="text-muted">No machine learning models have been created yet.</p>
+                        <button class="btn btn-climate-primary" onclick="createNewModel()">
+                            <i class="fas fa-plus me-1"></i>Create First Model
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model Types Information -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card card-climate">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Model Types
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-exclamation-triangle fa-2x text-warning me-3 mt-1"></i>
+                                <div>
+                                    <h6 class="mb-1">Anomaly Detection</h6>
+                                    <small class="text-muted">Identifies unusual patterns in climate data that may indicate extreme weather events or system malfunctions.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-chart-line fa-2x text-success me-3 mt-1"></i>
+                                <div>
+                                    <h6 class="mb-1">Trend Prediction</h6>
+                                    <small class="text-muted">Forecasts long-term climate trends using historical data and advanced time series analysis.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-project-diagram fa-2x text-info me-3 mt-1"></i>
+                                <div>
+                                    <h6 class="mb-1">Correlation Analysis</h6>
+                                    <small class="text-muted">Discovers relationships between different climate variables across geographical regions.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Model Details Modal -->
+<div class="modal fade" id="modelDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Model Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modelDetailsContent">
+                    <div class="text-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function viewModelDetails(modelId) {
+    const modal = new bootstrap.Modal(document.getElementById('modelDetailsModal'));
+    modal.show();
+    
+    setTimeout(() => {
+        document.getElementById('modelDetailsContent').innerHTML = `
+            <div class="alert alert-info">
+                <h6>Model ID: ${modelId}</h6>
+                <p>Detailed model information would be loaded here, including:</p>
+                <ul>
+                    <li>Model architecture and parameters</li>
+                    <li>Training history and performance metrics</li>
+                    <li>Feature importance and data requirements</li>
+                    <li>Validation results and test scores</li>
+                    <li>Deployment status and usage statistics</li>
+                    <li>Model versioning and change history</li>
+                </ul>
+            </div>
+        `;
+    }, 1000);
+}
+
+function testModel(modelId) {
+    alert('Model testing functionality coming soon!\nModel ID: ' + modelId + '\n\nThis will allow you to test the model with sample data.');
+}
+
+function deployModel(modelId) {
+    alert('Model deployment functionality coming soon!\nModel ID: ' + modelId + '\n\nThis will deploy the model to production environment.');
+}
+
+function createNewModel() {
+    alert('Create new model functionality coming soon!\n\nThis will open a wizard to create and train new ML models.');
+}
+
+// Auto-refresh model status every 5 minutes
+setInterval(() => {
+    if (document.visibilityState === 'visible') {
+        location.reload();
+    }
+}, 300000);
+</script>
+{% endblock %}

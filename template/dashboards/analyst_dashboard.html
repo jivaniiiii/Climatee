@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+
+{% block title %}Climate Analyst Dashboard - EarthScape Climate Agency{% endblock %}
+
+{% block extra_css %}
+<style>
+    .metric-card {
+        transition: transform 0.2s;
+    }
+    .metric-card:hover {
+        transform: translateY(-2px);
+    }
+    .anomaly-item {
+        border-left: 4px solid #dc3545;
+    }
+    .model-card {
+        border-left: 3px solid var(--climate-secondary);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-0 text-climate-primary">
+                        <i class="fas fa-chart-line me-2"></i>Climate Analyst Dashboard
+                    </h1>
+                    <p class="text-muted mb-0">Advanced climate data analysis and insights</p>
+                </div>
+                <div>
+                    <button class="btn btn-climate-primary" onclick="refreshData()">
+                        <i class="fas fa-sync-alt me-1"></i>Refresh Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Summary Metrics -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card metric-card card-climate h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-muted">Total Records</h6>
+                            <h3 class="text-climate-primary">{{ data_summary.total_records|default:0|floatformat:0 }}</h3>
+                            <small class="text-info">
+                                <i class="fas fa-database me-1"></i>Climate data points
+                            </small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-chart-bar fa-2x text-climate-primary opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card metric-card card-climate h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-muted">Avg Temperature</h6>
+                            <h3 class="text-climate-primary">{{ data_summary.avg_temperature|default:0|floatformat:1 }}°C</h3>
+                            <small class="text-success">
+                                <i class="fas fa-thermometer-half me-1"></i>Global average
+                            </small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-thermometer-half fa-2x text-climate-primary opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card metric-card card-climate h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-muted">Max CO2 Level</h6>
+                            <h3 class="text-climate-primary">{{ data_summary.max_co2|default:0|floatformat:0 }}</h3>
+                            <small class="text-warning">
+                                <i class="fas fa-smog me-1"></i>ppm recorded
+                            </small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-smog fa-2x text-climate-primary opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card metric-card card-climate h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-muted">Anomalies Detected</h6>
+                            <h3 class="text-climate-primary">{{ data_summary.anomaly_count|default:0 }}</h3>
+                            <small class="text-danger">
+                                <i class="fas fa-exclamation-triangle me-1"></i>Requires analysis
+                            </small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-exclamation-triangle fa-2x text-climate-primary opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts and Analysis Row -->
+    <div class="row mb-4">
+        <!-- Climate Data Visualization -->
+        <div class="col-lg-8 mb-3">
+            <div class="card card-climate h-100">
+                <div class="card-header bg-climate-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-chart-area me-2"></i>Climate Data Trends
+                        </h5>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <input type="radio" class="btn-check" name="dataType" id="temperature" value="temperature" checked>
+                            <label class="btn btn-outline-primary" for="temperature">Temperature</label>
+                            
+                            <input type="radio" class="btn-check" name="dataType" id="co2" value="co2_level">
+                            <label class="btn btn-outline-primary" for="co2">CO2</label>
+                            
+                            <input type="radio" class="btn-check" name="dataType" id="humidity" value="humidity">
+                            <label class="btn btn-outline-primary" for="humidity">Humidity</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="climateChart" style="height: 400px;">
+                        <!-- Chart will be rendered here -->
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <div class="text-center">
+                                <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Climate data visualization will appear here</p>
+                                <button class="btn btn-climate-primary" onclick="loadChart()">Load Chart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Source Distribution -->
+        <div class="col-lg-4 mb-3">
+            <div class="card card-climate h-100">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-satellite-dish me-2"></i>Data Source Distribution
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if source_distribution %}
+                    <div class="mb-3">
+                        {% for source in source_distribution %}
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-capitalize">{{ source.source_type|title }}</span>
+                            <span class="badge bg-primary">{{ source.count }}</span>
+                        </div>
+                        <div class="progress mb-2" style="height: 6px;">
+                            <div class="progress-bar" style="width: {{ source.count|mul:100|div:source_distribution|length }}%"></div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-satellite fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No data sources configured</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Anomalies and ML Models -->
+    <div class="row mb-4">
+        <!-- Recent Anomalies -->
+        <div class="col-lg-6 mb-3">
+            <div class="card card-climate h-100">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-search me-2"></i>Recent Anomalies
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if recent_anomalies %}
+                    <div class="list-group list-group-flush">
+                        {% for anomaly in recent_anomalies|slice:":8" %}
+                        <div class="list-group-item anomaly-item px-0 border-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ anomaly.get_data_type_display }}</h6>
+                                    <p class="mb-1 small">
+                                        <strong>{{ anomaly.value }} {{ anomaly.unit }}</strong> 
+                                        from {{ anomaly.data_source.name }}
+                                    </p>
+                                    <small class="text-muted">{{ anomaly.timestamp|timesince }} ago</small>
+                                </div>
+                                <span class="badge bg-danger">Anomaly</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{% url 'climate_data' %}?anomaly=true" class="btn btn-climate-primary btn-sm">View All Anomalies</a>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                        <p class="text-muted">No recent anomalies detected</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Active ML Models -->
+        <div class="col-lg-6 mb-3">
+            <div class="card card-climate h-100">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-brain me-2"></i>Active ML Models
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if active_models %}
+                    <div class="list-group list-group-flush">
+                        {% for model in active_models|slice:":5" %}
+                        <div class="list-group-item model-card px-0 border-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ model.name }}</h6>
+                                    <p class="mb-1 small text-muted">{{ model.get_model_type_display }}</p>
+                                    <small class="text-muted">
+                                        Version {{ model.version }}
+                                        {% if model.accuracy_score %}
+                                        | Accuracy: {{ model.accuracy_score|floatformat:2 }}%
+                                        {% endif %}
+                                    </small>
+                                </div>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-climate-primary btn-sm" onclick="alert('ML Model management coming soon!')">
+                            Manage Models
+                        </button>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-robot fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No active ML models</p>
+                        <button class="btn btn-climate-primary btn-sm" onclick="alert('ML Model deployment coming soon!')">
+                            Deploy Model
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analysis Tools -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-climate">
+                <div class="card-header bg-climate-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-tools me-2"></i>Analysis Tools
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-2">
+                            <a href="{% url 'climate_data' %}" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-table me-2"></i>Data Explorer
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <button class="btn btn-outline-info w-100" onclick="alert('Correlation analysis coming soon!')">
+                                <i class="fas fa-project-diagram me-2"></i>Correlation Analysis
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <button class="btn btn-outline-warning w-100" onclick="alert('Trend prediction coming soon!')">
+                                <i class="fas fa-chart-line me-2"></i>Trend Prediction
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <button class="btn btn-outline-success w-100" onclick="alert('Export functionality coming soon!')">
+                                <i class="fas fa-download me-2"></i>Export Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function refreshData() {
+    location.reload();
+}
+
+function loadChart() {
+    // Placeholder for chart loading functionality
+    const chartDiv = document.getElementById('climateChart');
+    chartDiv.innerHTML = `
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="text-muted mt-2">Loading climate data...</p>
+            </div>
+        </div>
+    `;
+    
+    // Simulate loading
+    setTimeout(() => {
+        chartDiv.innerHTML = `
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="text-center">
+                    <i class="fas fa-chart-area fa-3x text-success mb-3"></i>
+                    <p class="text-muted">Chart functionality will be implemented with real data</p>
+                    <small class="text-muted">This would show interactive climate data visualizations</small>
+                </div>
+            </div>
+        `;
+    }, 2000);
+}
+
+// Data type selection handler
+document.querySelectorAll('input[name="dataType"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        if (this.checked) {
+            console.log('Selected data type:', this.value);
+            // Here you would load the chart for the selected data type
+        }
+    });
+});
+</script>
+{% endblock %}
