@@ -575,3 +575,387 @@ INFO 2025-09-09 04:06:42,227 basehttp 18740 47728 "GET /static/lib/animate/anima
 WARNING 2025-09-09 04:06:44,088 basehttp 18740 47728 "GET /static/images/climate-hero-bg.jpg HTTP/1.1" 404 1837
 WARNING 2025-09-09 04:06:45,187 log 18740 15704 Not Found: /favicon.ico
 WARNING 2025-09-09 04:06:45,189 basehttp 18740 15704 "GET /favicon.ico HTTP/1.1" 404 5594
+INFO 2025-09-09 00:10:24,345 autoreload 2444 132447618946880 Watching for file changes with StatReloader
+INFO 2025-09-09 00:10:31,685 basehttp 2444 132446832359104 "HEAD / HTTP/1.1" 200 0
+INFO 2025-09-09 00:10:43,064 basehttp 2444 132446832359104 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:10:43,092 basehttp 2444 132446806132416 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 200 2936
+INFO 2025-09-09 00:10:43,094 basehttp 2444 132446814525120 "GET /static/lib/animate/animate.min.css HTTP/1.1" 200 16953
+INFO 2025-09-09 00:10:43,095 basehttp 2444 132446832359104 "GET /static/css/styles.css HTTP/1.1" 200 11105
+INFO 2025-09-09 00:10:43,095 basehttp 2444 132446590858944 "GET /static/images/logo.png HTTP/1.1" 200 19332
+INFO 2025-09-09 00:10:43,096 basehttp 2444 132446822917824 "GET /static/css/bootstrap.min.css HTTP/1.1" 200 164194
+INFO 2025-09-09 00:10:43,186 basehttp 2444 132446822917824 "GET /static/lib/wow/wow.min.js HTTP/1.1" 200 8156
+INFO 2025-09-09 00:10:43,194 basehttp 2444 132446822917824 "GET /static/lib/easing/easing.min.js HTTP/1.1" 200 2302
+INFO 2025-09-09 00:10:43,199 basehttp 2444 132446822917824 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 200 9028
+INFO 2025-09-09 00:10:43,204 basehttp 2444 132446822917824 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 200 42766
+INFO 2025-09-09 00:10:43,209 basehttp 2444 132446822917824 "GET /static/js/main.js HTTP/1.1" 200 2698
+WARNING 2025-09-09 00:10:43,545 basehttp 2444 132446822917824 "GET /static/images/climate-hero-bg.jpg HTTP/1.1" 404 1873
+INFO 2025-09-09 00:10:50,572 basehttp 2444 132446590858944 "GET /login/ HTTP/1.1" 200 14689
+WARNING 2025-09-09 00:10:59,582 basehttp 2444 132446590858944 "POST /login/ HTTP/1.1" 403 2606
+INFO 2025-09-09 00:11:17,325 autoreload 2444 132447618946880 /openhands/code/Climatee/EduPredict/settings.py changed, reloading.
+INFO 2025-09-09 00:11:17,664 autoreload 2837 133095452489536 Watching for file changes with StatReloader
+INFO 2025-09-09 00:11:25,522 autoreload 2947 131128515909440 Watching for file changes with StatReloader
+INFO 2025-09-09 00:11:32,096 basehttp 2947 131127729186496 "HEAD / HTTP/1.1" 200 0
+INFO 2025-09-09 00:11:37,414 basehttp 2947 131127729186496 "GET /login/ HTTP/1.1" 200 14689
+INFO 2025-09-09 00:11:37,423 basehttp 2947 131127729186496 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:11:37,425 basehttp 2947 131127719745216 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:11:37,426 basehttp 2947 131127711352512 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:11:37,427 basehttp 2947 131127499028160 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:11:37,428 basehttp 2947 131127490635456 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:11:37,430 basehttp 2947 131127482242752 "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-09-09 00:11:37,439 basehttp 2947 131127482242752 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:11:37,439 basehttp 2947 131127490635456 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:11:37,485 basehttp 2947 131127482242752 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:11:37,486 basehttp 2947 131127490635456 "GET /static/js/main.js HTTP/1.1" 304 0
+WARNING 2025-09-09 00:11:48,063 climate_views 2947 131127482242752 Failed login attempt for username: admin from IP 10.1.0.77
+INFO 2025-09-09 00:11:48,066 basehttp 2947 131127482242752 "POST /login/ HTTP/1.1" 200 15034
+INFO 2025-09-09 00:12:12,483 climate_views 2947 131127482242752 Successful login for user admin from IP 10.1.0.77
+INFO 2025-09-09 00:12:12,485 basehttp 2947 131127482242752 "POST /login/ HTTP/1.1" 302 0
+INFO 2025-09-09 00:12:12,502 basehttp 2947 131127482242752 "GET /dashboard/admin/ HTTP/1.1" 200 28071
+WARNING 2025-09-09 00:12:12,519 log 2947 131127482242752 Not Found: /dashboard/static/images/logo.png
+WARNING 2025-09-09 00:12:12,519 basehttp 2947 131127482242752 "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6435
+WARNING 2025-09-09 00:12:20,743 log 2947 131127482242752 Not Found: /admin/users/
+WARNING 2025-09-09 00:12:20,743 basehttp 2947 131127482242752 "GET /admin/users/ HTTP/1.1" 404 5640
+INFO 2025-09-09 00:12:32,588 autoreload 2947 131128515909440 /openhands/code/Climatee/EduPredict/urls.py changed, reloading.
+INFO 2025-09-09 00:12:32,885 autoreload 3391 131695607465792 Watching for file changes with StatReloader
+INFO 2025-09-09 00:12:36,196 basehttp 3391 131694820914880 "GET /dashboard/admin/ HTTP/1.1" 200 28081
+INFO 2025-09-09 00:12:36,205 basehttp 3391 131694820914880 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:12:36,206 basehttp 3391 131694803080896 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:12:36,206 basehttp 3391 131694811473600 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:12:36,210 basehttp 3391 131694794688192 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:12:36,211 basehttp 3391 131694434711232 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+WARNING 2025-09-09 00:12:36,215 log 3391 131694786295488 Not Found: /dashboard/static/images/logo.png
+INFO 2025-09-09 00:12:36,215 basehttp 3391 131694434711232 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+WARNING 2025-09-09 00:12:36,216 basehttp 3391 131694786295488 "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO 2025-09-09 00:12:36,219 basehttp 3391 131694786295488 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:12:36,284 basehttp 3391 131694786295488 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:12:36,285 basehttp 3391 131694434711232 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:12:44,201 basehttp 3391 131694786295488 "GET /management/users/ HTTP/1.1" 200 30872
+WARNING 2025-09-09 00:12:44,214 log 3391 131694786295488 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:12:44,215 basehttp 3391 131694786295488 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+ERROR 2025-09-09 00:13:48,684 log 3391 131694786295488 Internal Server Error: /management/credentials/
+Traceback (most recent call last):
+  File "/openhands/micromamba/envs/openhands/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/openhands/micromamba/envs/openhands/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/openhands/micromamba/envs/openhands/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/openhands/micromamba/envs/openhands/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/openhands/code/Climatee/educationmodel/climate_views.py", line 685, in system_credentials_view
+    legacy_users = Signup.objects.all().order_by('name')
+                   ^^^^^^
+NameError: name 'Signup' is not defined
+ERROR 2025-09-09 00:13:48,686 basehttp 3391 131694786295488 "GET /management/credentials/ HTTP/1.1" 500 86175
+INFO 2025-09-09 00:14:15,445 autoreload 3391 131695607465792 /openhands/code/Climatee/educationmodel/climate_views.py changed, reloading.
+INFO 2025-09-09 00:14:15,742 autoreload 3744 130817484531520 Watching for file changes with StatReloader
+INFO 2025-09-09 00:14:19,266 basehttp 3744 130816697427648 "GET /management/credentials/ HTTP/1.1" 200 36227
+INFO 2025-09-09 00:14:19,276 basehttp 3744 130816697427648 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:14:19,278 basehttp 3744 130816687986368 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:14:19,278 basehttp 3744 130816679593664 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:14:19,279 basehttp 3744 130816671200960 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:14:19,283 basehttp 3744 130816315225792 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+WARNING 2025-09-09 00:14:19,289 log 3744 130816662808256 Not Found: /management/static/images/logo.png
+INFO 2025-09-09 00:14:19,289 basehttp 3744 130816315225792 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+WARNING 2025-09-09 00:14:19,289 basehttp 3744 130816662808256 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:14:19,293 basehttp 3744 130816662808256 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:14:19,334 basehttp 3744 130816315225792 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:14:19,338 basehttp 3744 130816662808256 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:16:37,487 basehttp 3744 130816662808256 "GET /management/users/ HTTP/1.1" 200 30872
+INFO 2025-09-09 00:16:37,496 basehttp 3744 130816662808256 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:16:37,497 basehttp 3744 130816315225792 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:16:37,498 basehttp 3744 130816697427648 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:16:37,499 basehttp 3744 130816679593664 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:16:37,502 basehttp 3744 130816671200960 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+WARNING 2025-09-09 00:16:37,505 log 3744 130816687986368 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:16:37,505 basehttp 3744 130816687986368 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:16:37,506 basehttp 3744 130816671200960 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:16:37,509 basehttp 3744 130816687986368 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:16:37,602 basehttp 3744 130816671200960 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:16:37,602 basehttp 3744 130816687986368 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:17:06,172 basehttp 3744 130816687986368 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:17:07,262 basehttp 3744 130816306833088 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:17:07,558 basehttp 3744 130816306833088 "GET /static/lib/animate/animate.min.css HTTP/1.1" 200 16953
+INFO 2025-09-09 00:17:07,559 basehttp 3744 130816281654976 "GET /static/css/styles.css HTTP/1.1" 200 11105
+INFO 2025-09-09 00:17:07,559 basehttp 3744 130816298440384 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 200 2936
+INFO 2025-09-09 00:17:07,559 basehttp 3744 130816290047680 "GET /static/css/bootstrap.min.css HTTP/1.1" 200 164194
+INFO 2025-09-09 00:17:07,761 basehttp 3744 130816290047680 "GET /static/images/logo.png HTTP/1.1" 200 19332
+INFO 2025-09-09 00:17:08,394 basehttp 3744 130816290047680 "GET /static/lib/wow/wow.min.js HTTP/1.1" 200 8156
+INFO 2025-09-09 00:17:08,493 basehttp 3744 130816290047680 "GET /static/lib/easing/easing.min.js HTTP/1.1" 200 2302
+INFO 2025-09-09 00:17:08,663 basehttp 3744 130816290047680 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 200 9028
+INFO 2025-09-09 00:17:08,727 basehttp 3744 130816290047680 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 200 42766
+INFO 2025-09-09 00:17:09,206 basehttp 3744 130816290047680 "GET /static/js/main.js HTTP/1.1" 200 2698
+INFO 2025-09-09 00:17:37,054 basehttp 3744 130816687986368 "GET /management/users/ HTTP/1.1" 200 30872
+WARNING 2025-09-09 00:17:37,069 log 3744 130816687986368 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:17:37,069 basehttp 3744 130816687986368 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+WARNING 2025-09-09 00:18:05,376 basehttp 3744 130816273262272 "POST /management/users/promote-demote/ HTTP/1.1" 403 2870
+INFO 2025-09-09 00:18:11,475 basehttp 3744 130816687986368 "GET /management/users/3/ HTTP/1.1" 200 24273
+INFO 2025-09-09 00:18:11,484 basehttp 3744 130816687986368 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:18:11,489 basehttp 3744 130816662808256 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:18:11,489 basehttp 3744 130816671200960 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:18:11,490 basehttp 3744 130816697427648 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:18:11,490 basehttp 3744 130816315225792 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+WARNING 2025-09-09 00:18:11,494 log 3744 130816679593664 Not Found: /management/users/static/images/logo.png
+WARNING 2025-09-09 00:18:11,495 basehttp 3744 130816679593664 "GET /management/users/static/images/logo.png HTTP/1.1" 404 6481
+INFO 2025-09-09 00:18:11,495 basehttp 3744 130816315225792 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:18:11,498 basehttp 3744 130816679593664 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:18:11,566 basehttp 3744 130816315225792 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:18:11,567 basehttp 3744 130816679593664 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:21:08,521 basehttp 3744 130816679593664 "GET / HTTP/1.1" 200 24054
+WARNING 2025-09-09 00:21:28,786 basehttp 3744 130816315225792 "GET /static/images/climate-hero-bg.jpg HTTP/1.1" 404 1873
+INFO 2025-09-09 00:21:33,824 basehttp 3744 130816315225792 "GET // HTTP/1.1" 200 24054
+INFO 2025-09-09 00:21:34,078 basehttp 3744 130816315225792 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:21:34,078 basehttp 3744 130816687986368 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:21:34,431 basehttp 3744 130816687986368 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:21:34,472 basehttp 3744 130816315225792 "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-09-09 00:21:34,473 basehttp 3744 130816687986368 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:21:34,473 basehttp 3744 130816697427648 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:21:34,796 basehttp 3744 130816697427648 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:21:34,983 basehttp 3744 130816315225792 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:21:34,983 basehttp 3744 130816697427648 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:21:35,220 basehttp 3744 130816697427648 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:21:35,220 basehttp 3744 130816315225792 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+WARNING 2025-09-09 00:21:35,493 basehttp 3744 130816315225792 "GET /static/images/climate-hero-bg.jpg HTTP/1.1" 404 1873
+WARNING 2025-09-09 00:21:35,736 basehttp 3744 130816697427648 "GET /static/images/climate-hero-bg.jpg HTTP/1.1" 404 1873
+WARNING 2025-09-09 00:21:36,026 log 3744 130816687986368 Not Found: /favicon.ico
+WARNING 2025-09-09 00:21:36,026 basehttp 3744 130816687986368 "GET /favicon.ico HTTP/1.1" 404 6397
+INFO 2025-09-09 00:21:37,564 basehttp 3744 130816687986368 "GET /login/ HTTP/1.1" 200 14689
+INFO 2025-09-09 00:21:44,269 climate_views 3744 130816687986368 Successful login for user admin from IP 10.1.0.50
+INFO 2025-09-09 00:21:44,270 basehttp 3744 130816687986368 "POST /login/ HTTP/1.1" 302 0
+INFO 2025-09-09 00:21:44,505 basehttp 3744 130816687986368 "GET /dashboard/admin/ HTTP/1.1" 200 28081
+WARNING 2025-09-09 00:21:45,115 log 3744 130816687986368 Not Found: /dashboard/static/images/logo.png
+WARNING 2025-09-09 00:21:45,115 basehttp 3744 130816687986368 "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO 2025-09-09 00:21:49,545 basehttp 3744 130816687986368 "GET /profile/ HTTP/1.1" 200 25673
+INFO 2025-09-09 00:22:08,712 basehttp 3744 130816679593664 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:22:19,893 basehttp 3744 130816687986368 "GET /dashboard/ HTTP/1.1" 200 44248
+INFO 2025-09-09 00:22:32,214 basehttp 3744 130816687986368 "GET /profile/ HTTP/1.1" 200 25673
+INFO 2025-09-09 00:22:39,904 basehttp 3744 130816679593664 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:22:43,774 basehttp 3744 130816687986368 "GET /dashboard/ HTTP/1.1" 200 44248
+INFO 2025-09-09 00:22:58,657 basehttp 3744 130816687986368 "GET /support/ HTTP/1.1" 200 42332
+INFO 2025-09-09 00:23:05,200 basehttp 3744 130816687986368 "GET /profile/ HTTP/1.1" 200 25671
+WARNING 2025-09-09 00:23:24,515 log 3744 130816687986368 Not Found: /admin/users
+WARNING 2025-09-09 00:23:24,516 basehttp 3744 130816687986368 "GET /admin/users HTTP/1.1" 404 5637
+WARNING 2025-09-09 00:23:26,683 log 3744 130816687986368 Not Found: /admin/user
+WARNING 2025-09-09 00:23:26,683 basehttp 3744 130816687986368 "GET /admin/user HTTP/1.1" 404 5634
+INFO 2025-09-09 00:23:30,531 basehttp 3744 130816687986368 "GET /admin/ HTTP/1.1" 200 9138
+INFO 2025-09-09 00:23:30,769 basehttp 3744 130816687986368 "GET /static/admin/css/base.css HTTP/1.1" 200 21310
+INFO 2025-09-09 00:23:30,783 basehttp 3744 130816687986368 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+INFO 2025-09-09 00:23:30,784 basehttp 3744 130816697427648 "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+INFO 2025-09-09 00:23:30,785 basehttp 3744 130816315225792 "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-09-09 00:23:30,786 basehttp 3744 130816671200960 "GET /static/admin/css/responsive.css HTTP/1.1" 200 18559
+INFO 2025-09-09 00:23:30,787 basehttp 3744 130816306833088 "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+INFO 2025-09-09 00:23:30,787 basehttp 3744 130816662808256 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-09-09 00:23:31,229 basehttp 3744 130816662808256 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-09-09 00:23:31,229 basehttp 3744 130816306833088 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+WARNING 2025-09-09 00:23:41,367 log 3744 130816306833088 Not Found: /admin/dashboard
+WARNING 2025-09-09 00:23:41,368 basehttp 3744 130816306833088 "GET /admin/dashboard HTTP/1.1" 404 5649
+INFO 2025-09-09 00:23:44,792 basehttp 3744 130816679593664 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:23:50,027 basehttp 3744 130816306833088 "GET / HTTP/1.1" 302 0
+INFO 2025-09-09 00:23:50,300 basehttp 3744 130816306833088 "GET /dashboard/ HTTP/1.1" 200 44248
+INFO 2025-09-09 00:23:50,559 basehttp 3744 130816306833088 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:23:50,566 basehttp 3744 130816306833088 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:23:50,566 basehttp 3744 130816662808256 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:23:50,567 basehttp 3744 130816671200960 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:23:50,982 basehttp 3744 130816306833088 "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-09-09 00:23:50,983 basehttp 3744 130816306833088 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:23:51,083 basehttp 3744 130816671200960 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:23:51,084 basehttp 3744 130816662808256 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:23:51,084 basehttp 3744 130816306833088 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:23:51,084 basehttp 3744 130816315225792 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:23:57,538 climate_views 3744 130816315225792 User admin logged out
+INFO 2025-09-09 00:23:57,539 basehttp 3744 130816315225792 "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-09-09 00:23:57,769 basehttp 3744 130816315225792 "GET /login/ HTTP/1.1" 200 15036
+INFO 2025-09-09 00:24:04,164 climate_views 3744 130816315225792 Successful login for user admin from IP 10.1.0.50
+INFO 2025-09-09 00:24:04,165 basehttp 3744 130816315225792 "POST /login/ HTTP/1.1" 302 0
+INFO 2025-09-09 00:24:04,402 basehttp 3744 130816315225792 "GET /dashboard/admin/ HTTP/1.1" 200 28081
+WARNING 2025-09-09 00:24:05,018 log 3744 130816315225792 Not Found: /dashboard/static/images/logo.png
+WARNING 2025-09-09 00:24:05,018 basehttp 3744 130816315225792 "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO 2025-09-09 00:24:29,891 basehttp 3744 130816315225792 "GET /admin/ HTTP/1.1" 200 9138
+INFO 2025-09-09 00:24:32,322 basehttp 3744 130816679593664 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:24:36,988 basehttp 3744 130816315225792 "GET /management/users/ HTTP/1.1" 200 30872
+WARNING 2025-09-09 00:24:37,470 log 3744 130816315225792 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:24:37,470 basehttp 3744 130816315225792 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:24:43,891 basehttp 3744 130816315225792 "GET /management/credentials/ HTTP/1.1" 200 36227
+WARNING 2025-09-09 00:24:44,346 log 3744 130816315225792 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:24:44,346 basehttp 3744 130816315225792 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:25:01,200 basehttp 3744 130816315225792 "GET / HTTP/1.1" 302 0
+INFO 2025-09-09 00:25:01,436 basehttp 3744 130816315225792 "GET /dashboard/ HTTP/1.1" 200 44248
+INFO 2025-09-09 00:25:12,888 basehttp 3744 130816697427648 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:25:13,419 basehttp 3744 130816697427648 "GET /static/css/styles.css HTTP/1.1" 200 11105
+INFO 2025-09-09 00:25:13,422 basehttp 3744 130816281654976 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 200 2936
+INFO 2025-09-09 00:25:13,423 basehttp 3744 130816298440384 "GET /static/images/logo.png HTTP/1.1" 200 19332
+INFO 2025-09-09 00:25:13,423 basehttp 3744 130816290047680 "GET /static/lib/animate/animate.min.css HTTP/1.1" 200 16953
+INFO 2025-09-09 00:25:13,424 basehttp 3744 130816687986368 "GET /static/css/bootstrap.min.css HTTP/1.1" 200 164194
+INFO 2025-09-09 00:25:13,661 basehttp 3744 130816687986368 "GET /static/lib/wow/wow.min.js HTTP/1.1" 200 8156
+INFO 2025-09-09 00:25:13,871 basehttp 3744 130816687986368 "GET /static/lib/easing/easing.min.js HTTP/1.1" 200 2302
+INFO 2025-09-09 00:25:14,157 basehttp 3744 130816687986368 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 200 42766
+INFO 2025-09-09 00:25:14,158 basehttp 3744 130816290047680 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 200 9028
+INFO 2025-09-09 00:25:14,305 basehttp 3744 130816290047680 "GET /static/js/main.js HTTP/1.1" 200 2698
+WARNING 2025-09-09 00:25:14,314 basehttp 3744 130816290047680 "GET /static/images/climate-hero-bg.jpg HTTP/1.1" 404 1873
+INFO 2025-09-09 00:25:19,911 basehttp 3744 130816687986368 "GET /login/ HTTP/1.1" 200 14689
+INFO 2025-09-09 00:25:22,271 basehttp 3744 130816687986368 "GET /register/ HTTP/1.1" 200 18832
+INFO 2025-09-09 00:25:50,748 climate_views 3744 130816687986368 New user registered: minu (minhal@aptechgdn.net)
+INFO 2025-09-09 00:25:50,749 basehttp 3744 130816687986368 "POST /register/ HTTP/1.1" 302 0
+INFO 2025-09-09 00:25:50,978 basehttp 3744 130816687986368 "GET /login/ HTTP/1.1" 200 15042
+INFO 2025-09-09 00:26:02,893 climate_views 3744 130816687986368 Successful login for user minu from IP 10.1.0.78
+INFO 2025-09-09 00:26:02,894 basehttp 3744 130816687986368 "POST /login/ HTTP/1.1" 302 0
+INFO 2025-09-09 00:26:03,135 basehttp 3744 130816687986368 "GET /dashboard/viewer/ HTTP/1.1" 200 43644
+WARNING 2025-09-09 00:26:03,817 log 3744 130816687986368 Not Found: /dashboard/static/images/logo.png
+WARNING 2025-09-09 00:26:03,817 basehttp 3744 130816687986368 "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO 2025-09-09 00:26:46,890 basehttp 3744 130816281654976 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:26:58,903 basehttp 3744 130816298440384 "GET /management/credentials/ HTTP/1.1" 200 38864
+INFO 2025-09-09 00:26:59,358 basehttp 3744 130816298440384 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:26:59,360 basehttp 3744 130816697427648 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:26:59,361 basehttp 3744 130816298440384 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:26:59,364 basehttp 3744 130816679593664 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:26:59,364 basehttp 3744 130816671200960 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+WARNING 2025-09-09 00:26:59,367 log 3744 130816315225792 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:26:59,367 basehttp 3744 130816315225792 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:26:59,592 basehttp 3744 130816298440384 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:26:59,593 basehttp 3744 130816315225792 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:26:59,725 basehttp 3744 130816298440384 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:26:59,726 basehttp 3744 130816315225792 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:06,751 basehttp 3744 130816315225792 "GET /management/users/ HTTP/1.1" 200 34166
+WARNING 2025-09-09 00:27:07,208 log 3744 130816315225792 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:27:07,208 basehttp 3744 130816315225792 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:27:12,809 climate_views 3744 130816315225792 User role changed by admin: minu from viewer to analyst
+INFO 2025-09-09 00:27:12,809 basehttp 3744 130816315225792 "POST /management/users/promote-demote/ HTTP/1.1" 200 138
+INFO 2025-09-09 00:27:20,572 basehttp 3744 130816687986368 "GET /dashboard/viewer/ HTTP/1.1" 200 44266
+WARNING 2025-09-09 00:27:21,235 log 3744 130816687986368 Not Found: /dashboard/static/images/logo.png
+WARNING 2025-09-09 00:27:21,235 basehttp 3744 130816687986368 "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO 2025-09-09 00:27:21,250 basehttp 3744 130816687986368 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:21,251 basehttp 3744 130816662808256 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:25,184 basehttp 3744 130816687986368 "GET /profile/ HTTP/1.1" 200 25665
+INFO 2025-09-09 00:27:25,435 basehttp 3744 130816687986368 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:25,452 basehttp 3744 130816662808256 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:25,453 basehttp 3744 130816687986368 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:25,453 basehttp 3744 130816306833088 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:25,627 basehttp 3744 130816687986368 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:25,628 basehttp 3744 130816306833088 "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:25,813 basehttp 3744 130816687986368 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:25,813 basehttp 3744 130816306833088 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:27:34,403 climate_views 3744 130816315225792 User role changed by admin: minu from analyst to viewer
+INFO 2025-09-09 00:27:34,403 basehttp 3744 130816315225792 "POST /management/users/promote-demote/ HTTP/1.1" 200 138
+INFO 2025-09-09 00:27:37,890 basehttp 3744 130816306833088 "GET /profile/ HTTP/1.1" 200 25031
+INFO 2025-09-09 00:27:47,935 basehttp 3744 130816281654976 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:28:17,379 basehttp 3744 130816315225792 "GET /support/ HTTP/1.1" 200 42332
+INFO 2025-09-09 00:28:18,057 basehttp 3744 130816315225792 "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-09-09 00:28:23,813 basehttp 3744 130816315225792 "GET /dashboard/ HTTP/1.1" 200 44248
+INFO 2025-09-09 00:28:38,340 basehttp 3744 130816315225792 "GET /profile/ HTTP/1.1" 200 25673
+INFO 2025-09-09 00:28:51,690 basehttp 3744 130816281654976 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:30:11,071 basehttp 3744 130816315225792 "GET / HTTP/1.1" 302 0
+INFO 2025-09-09 00:30:11,314 basehttp 3744 130816315225792 "GET /dashboard/ HTTP/1.1" 200 44248
+INFO 2025-09-09 00:30:11,701 basehttp 3744 130816315225792 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:11,702 basehttp 3744 130816315225792 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:11,718 basehttp 3744 130816306833088 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:11,996 basehttp 3744 130816315225792 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:12,018 basehttp 3744 130816315225792 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:12,022 basehttp 3744 130816306833088 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:12,404 basehttp 3744 130816315225792 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:12,413 basehttp 3744 130816315225792 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:12,413 basehttp 3744 130816306833088 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+WARNING 2025-09-09 00:30:17,740 log 3744 130816315225792 Not Found: /management
+WARNING 2025-09-09 00:30:17,741 basehttp 3744 130816315225792 "GET /management HTTP/1.1" 404 6394
+INFO 2025-09-09 00:30:23,802 basehttp 3744 130816315225792 "GET /management/users/3 HTTP/1.1" 301 0
+INFO 2025-09-09 00:30:24,040 basehttp 3744 130816306833088 "GET /management/users/3/ HTTP/1.1" 200 24273
+INFO 2025-09-09 00:30:24,292 basehttp 3744 130816306833088 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:24,311 basehttp 3744 130816306833088 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:24,312 basehttp 3744 130816315225792 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:24,312 basehttp 3744 130816281654976 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:24,544 basehttp 3744 130816306833088 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+WARNING 2025-09-09 00:30:24,548 log 3744 130816315225792 Not Found: /management/users/static/images/logo.png
+WARNING 2025-09-09 00:30:24,548 basehttp 3744 130816315225792 "GET /management/users/static/images/logo.png HTTP/1.1" 404 6481
+INFO 2025-09-09 00:30:24,800 basehttp 3744 130816306833088 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:24,800 basehttp 3744 130816281654976 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:24,800 basehttp 3744 130816315225792 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:24,801 basehttp 3744 130816687986368 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:31,341 basehttp 3744 130816687986368 "GET /management/users/ HTTP/1.1" 200 34166
+WARNING 2025-09-09 00:30:31,796 log 3744 130816687986368 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:30:31,797 basehttp 3744 130816687986368 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:30:37,919 basehttp 3744 130816687986368 "GET /management/users/1/ HTTP/1.1" 200 35068
+WARNING 2025-09-09 00:30:38,373 log 3744 130816687986368 Not Found: /management/users/static/images/logo.png
+WARNING 2025-09-09 00:30:38,374 basehttp 3744 130816687986368 "GET /management/users/static/images/logo.png HTTP/1.1" 404 6481
+INFO 2025-09-09 00:30:48,845 basehttp 3744 130816687986368 "GET /management/users/ HTTP/1.1" 200 34472
+WARNING 2025-09-09 00:30:49,452 log 3744 130816687986368 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:30:49,452 basehttp 3744 130816687986368 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:30:50,829 basehttp 3744 130816662808256 "GET /dashboard/ HTTP/1.1" 200 44554
+INFO 2025-09-09 00:30:50,838 basehttp 3744 130816662808256 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:50,839 basehttp 3744 130816679593664 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:50,839 basehttp 3744 130816697427648 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:50,840 basehttp 3744 130816671200960 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:50,841 basehttp 3744 130816298440384 "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:50,842 basehttp 3744 130816290047680 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:50,844 basehttp 3744 130816290047680 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:50,845 basehttp 3744 130816298440384 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:50,920 basehttp 3744 130816298440384 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:50,920 basehttp 3744 130816290047680 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:30:53,100 basehttp 3744 130816687986368 "GET /management/users/4/ HTTP/1.1" 200 20596
+WARNING 2025-09-09 00:30:53,555 log 3744 130816687986368 Not Found: /management/users/static/images/logo.png
+WARNING 2025-09-09 00:30:53,556 basehttp 3744 130816687986368 "GET /management/users/static/images/logo.png HTTP/1.1" 404 6481
+INFO 2025-09-09 00:30:58,691 basehttp 3744 130816290047680 "GET /dashboard/admin/ HTTP/1.1" 200 28388
+WARNING 2025-09-09 00:30:58,706 log 3744 130816290047680 Not Found: /dashboard/static/images/logo.png
+WARNING 2025-09-09 00:30:58,706 basehttp 3744 130816290047680 "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO 2025-09-09 00:31:15,987 basehttp 3744 130816687986368 "GET /management/users/4/ HTTP/1.1" 200 20596
+WARNING 2025-09-09 00:31:16,443 log 3744 130816687986368 Not Found: /management/users/static/images/logo.png
+WARNING 2025-09-09 00:31:16,443 basehttp 3744 130816687986368 "GET /management/users/static/images/logo.png HTTP/1.1" 404 6481
+INFO 2025-09-09 00:31:21,301 basehttp 3744 130816687986368 "GET /management/users/ HTTP/1.1" 200 34472
+WARNING 2025-09-09 00:31:21,882 log 3744 130816687986368 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:31:21,883 basehttp 3744 130816687986368 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:31:27,579 climate_views 3744 130816687986368 User deactivated by admin: minu
+INFO 2025-09-09 00:31:27,580 basehttp 3744 130816687986368 "POST /management/users/toggle-status/ HTTP/1.1" 200 98
+INFO 2025-09-09 00:31:33,968 climate_views 3744 130816687986368 User activated by admin: minu
+INFO 2025-09-09 00:31:33,968 basehttp 3744 130816687986368 "POST /management/users/toggle-status/ HTTP/1.1" 200 95
+INFO 2025-09-09 00:31:37,363 basehttp 3744 130816290047680 "GET / HTTP/1.1" 200 24054
+INFO 2025-09-09 00:31:46,099 climate_views 3744 130816687986368 User admin logged out
+INFO 2025-09-09 00:31:46,101 basehttp 3744 130816687986368 "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-09-09 00:31:46,330 basehttp 3744 130816687986368 "GET /login/ HTTP/1.1" 200 15036
+INFO 2025-09-09 00:31:46,604 basehttp 3744 130816687986368 "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:31:46,615 basehttp 3744 130816315225792 "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:31:46,616 basehttp 3744 130816687986368 "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:31:46,616 basehttp 3744 130816306833088 "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-09-09 00:31:46,616 basehttp 3744 130816281654976 "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:31:46,778 basehttp 3744 130816687986368 "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:31:46,842 basehttp 3744 130816687986368 "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:31:47,010 basehttp 3744 130816281654976 "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:31:47,011 basehttp 3744 130816687986368 "GET /static/js/main.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:31:47,011 basehttp 3744 130816306833088 "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:31:53,002 climate_views 3744 130816306833088 Successful login for user admin from IP 10.1.0.50
+INFO 2025-09-09 00:31:53,004 basehttp 3744 130816306833088 "POST /login/ HTTP/1.1" 302 0
+INFO 2025-09-09 00:31:53,243 basehttp 3744 130816306833088 "GET /dashboard/admin/ HTTP/1.1" 200 28388
+WARNING 2025-09-09 00:31:53,728 log 3744 130816306833088 Not Found: /dashboard/static/images/logo.png
+WARNING 2025-09-09 00:31:53,729 basehttp 3744 130816306833088 "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO 2025-09-09 00:32:05,622 basehttp 3744 130816306833088 "GET /data/sources/ HTTP/1.1" 200 36172
+WARNING 2025-09-09 00:32:06,208 log 3744 130816306833088 Not Found: /data/static/images/logo.png
+WARNING 2025-09-09 00:32:06,208 basehttp 3744 130816306833088 "GET /data/static/images/logo.png HTTP/1.1" 404 6445
+INFO 2025-09-09 00:32:13,930 basehttp 3744 130816306833088 "GET /admin/ HTTP/1.1" 200 9138
+INFO 2025-09-09 00:32:14,176 basehttp 3744 130816306833088 "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:32:14,189 basehttp 3744 130816306833088 "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:32:14,189 basehttp 3744 130816687986368 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:32:14,191 basehttp 3744 130816687986368 "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:32:14,193 basehttp 3744 130816315225792 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:32:14,193 basehttp 3744 130816281654976 "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-09-09 00:32:14,193 basehttp 3744 130816273262272 "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-09-09 00:32:14,461 basehttp 3744 130816306833088 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+INFO 2025-09-09 00:32:14,462 basehttp 3744 130816687986368 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2025-09-09 00:32:19,584 basehttp 3744 130816687986368 "GET /admin/ HTTP/1.1" 200 9138
+INFO 2025-09-09 00:32:23,552 basehttp 3744 130816687986368 "GET /management/users/ HTTP/1.1" 200 34472
+WARNING 2025-09-09 00:32:24,018 log 3744 130816687986368 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:32:24,019 basehttp 3744 130816687986368 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:32:35,350 basehttp 3744 130816687986368 "GET /dashboard/admin/ HTTP/1.1" 200 28388
+WARNING 2025-09-09 00:32:35,891 log 3744 130816687986368 Not Found: /dashboard/static/images/logo.png
+WARNING 2025-09-09 00:32:35,891 basehttp 3744 130816687986368 "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO 2025-09-09 00:32:37,575 basehttp 3744 130816687986368 "GET /dashboard/ HTTP/1.1" 200 44554
+INFO 2025-09-09 00:32:41,123 basehttp 3744 130816687986368 "GET /dashboard/admin/ HTTP/1.1" 200 28388
+WARNING 2025-09-09 00:32:41,574 log 3744 130816687986368 Not Found: /dashboard/static/images/logo.png
+WARNING 2025-09-09 00:32:41,574 basehttp 3744 130816687986368 "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO 2025-09-09 00:32:51,950 basehttp 3744 130816687986368 "GET /management/credentials/ HTTP/1.1" 200 39170
+WARNING 2025-09-09 00:32:52,506 log 3744 130816687986368 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:32:52,507 basehttp 3744 130816687986368 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:32:57,456 basehttp 3744 130816687986368 "GET /management/users/ HTTP/1.1" 200 34472
+WARNING 2025-09-09 00:32:57,905 log 3744 130816687986368 Not Found: /management/static/images/logo.png
+WARNING 2025-09-09 00:32:57,905 basehttp 3744 130816687986368 "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO 2025-09-09 00:33:06,600 basehttp 3744 130816290047680 "GET / HTTP/1.1" 200 24054

@@ -115,6 +115,14 @@
                     </li>
                     {% endif %}
                     
+                    {% if user.has_admin_access %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin_dashboard' %}">
+                            <i class="fas fa-cogs me-1"></i>Admin Dashboard
+                        </a>
+                    </li>
+                    {% endif %}
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'alerts' %}">
                             <i class="fas fa-exclamation-triangle me-1"></i>Alerts
