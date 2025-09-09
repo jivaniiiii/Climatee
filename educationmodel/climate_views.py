@@ -20,7 +20,7 @@ from plotly.utils import PlotlyJSONEncoder
 
 from .models import (
     ClimateUser, UserRole, DataSource, ClimateData, ClimateAlert, 
-    MLModel, SupportTicket, SystemMetrics
+    MLModel, SupportTicket, SystemMetrics, Signup
 )
 
 logger = logging.getLogger(__name__)
@@ -508,3 +508,196 @@ def ml_models_view(request):
     }
     
     return render(request, 'ml/models.html', context)
+
+# User Management Views (Admin Only)
+@login_required
+@user_passes_test(is_admin)
+def user_management_view(request):
+    """Admin view to manage all users and their roles"""
+    
+    # Get all users with search and filter functionality
+    search_query = request.GET.get('search', '')
+    role_filter = request.GET.get('role', '')
+    
+    users = ClimateUser.objects.all()
+    
+    if search_query:
+        users = users.filter(
+            Q(username__icontains=search_query) |
+            Q(email__icontains=search_query) |
+            Q(first_name__icontains=search_query) |
+            Q(last_name__icontains=search_query) |
+            Q(organization__icontains=search_query)
+        )
+    
+    if role_filter:
+        users = users.filter(role=role_filter)
+    
+    users = users.order_by('username')
+    
+    # Pagination
+    paginator = Paginator(users, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    # Role statistics
+    role_stats = {
+        'total_users': ClimateUser.objects.count(),
+        'admin_count': ClimateUser.objects.filter(role=UserRole.ADMINISTRATOR).count(),
+        'analyst_count': ClimateUser.objects.filter(role=UserRole.ANALYST).count(),
+        'viewer_count': ClimateUser.objects.filter(role=UserRole.VIEWER).count(),
+        'active_users': ClimateUser.objects.filter(is_active=True).count(),
+        'inactive_users': ClimateUser.objects.filter(is_active=False).count(),
+    }
+    
+    context = {
+        'page_obj': page_obj,
+        'role_stats': role_stats,
+        'user_roles': UserRole.choices,
+        'search_query': search_query,
+        'role_filter': role_filter,
+    }
+    
+    return render(request, 'admin/user_management.html', context)
+
+@login_required
+@user_passes_test(is_admin)
+@require_http_methods(["POST"])
+def promote_demote_user(request):
+    """AJAX endpoint to promote/demote user roles"""
+    try:
+        user_id = request.POST.get('user_id')
+        new_role = request.POST.get('new_role')
+        
+        if not user_id or not new_role:
+            return JsonResponse({'success': False, 'error': 'Missing required parameters'})
+        
+        # Validate role
+        if new_role not in [choice[0] for choice in UserRole.choices]:
+            return JsonResponse({'success': False, 'error': 'Invalid role specified'})
+        
+        # Get the user to modify
+        target_user = get_object_or_404(ClimateUser, id=user_id)
+        
+        # Prevent admin from demoting themselves
+        if target_user == request.user and new_role != UserRole.ADMINISTRATOR:
+            return JsonResponse({
+                'success': False, 
+                'error': 'You cannot demote yourself from administrator role'
+            })
+        
+        # Store old role for logging
+        old_role = target_user.role
+        
+        # Update the role
+        target_user.role = new_role
+        target_user.save()
+        
+        # Log the action
+        logger.info(f"User role changed by {request.user.username}: {target_user.username} from {old_role} to {new_role}")
+        
+        return JsonResponse({
+            'success': True,
+            'message': f'User {target_user.username} role changed from {old_role} to {new_role}',
+            'old_role': old_role,
+            'new_role': new_role,
+            'user_id': user_id
+        })
+        
+    except Exception as e:
+        logger.error(f"Error in promote_demote_user: {str(e)}")
+        return JsonResponse({'success': False, 'error': 'An error occurred while updating user role'})
+
+@login_required
+@user_passes_test(is_admin)
+@require_http_methods(["POST"])
+def toggle_user_status(request):
+    """AJAX endpoint to activate/deactivate users"""
+    try:
+        user_id = request.POST.get('user_id')
+        
+        if not user_id:
+            return JsonResponse({'success': False, 'error': 'Missing user ID'})
+        
+        # Get the user to modify
+        target_user = get_object_or_404(ClimateUser, id=user_id)
+        
+        # Prevent admin from deactivating themselves
+        if target_user == request.user:
+            return JsonResponse({
+                'success': False, 
+                'error': 'You cannot deactivate your own account'
+            })
+        
+        # Toggle the active status
+        target_user.is_active = not target_user.is_active
+        target_user.save()
+        
+        # Log the action
+        status = "activated" if target_user.is_active else "deactivated"
+        logger.info(f"User {status} by {request.user.username}: {target_user.username}")
+        
+        return JsonResponse({
+            'success': True,
+            'message': f'User {target_user.username} has been {status}',
+            'is_active': target_user.is_active,
+            'user_id': user_id
+        })
+        
+    except Exception as e:
+        logger.error(f"Error in toggle_user_status: {str(e)}")
+        return JsonResponse({'success': False, 'error': 'An error occurred while updating user status'})
+
+@login_required
+@user_passes_test(is_admin)
+def user_details_view(request, user_id):
+    """View detailed information about a specific user"""
+    target_user = get_object_or_404(ClimateUser, id=user_id)
+    
+    # Get user's activity statistics
+    user_tickets = SupportTicket.objects.filter(created_by=target_user)
+    acknowledged_alerts = ClimateAlert.objects.filter(acknowledged_by=target_user)
+    created_models = MLModel.objects.filter(created_by=target_user)
+    
+    context = {
+        'target_user': target_user,
+        'user_tickets': user_tickets.order_by('-created_at')[:10],
+        'acknowledged_alerts': acknowledged_alerts.order_by('-acknowledged_at')[:10],
+        'created_models': created_models.order_by('-created_at')[:10],
+        'stats': {
+            'total_tickets': user_tickets.count(),
+            'total_alerts_acknowledged': acknowledged_alerts.count(),
+            'total_models_created': created_models.count(),
+        }
+    }
+    
+    return render(request, 'admin/user_details.html', context)
+
+@login_required
+@user_passes_test(is_admin)
+def system_credentials_view(request):
+    """Admin view to see all system credentials and account information"""
+    
+    # Get all ClimateUser accounts
+    climate_users = ClimateUser.objects.all().order_by('username')
+    
+    # Get all legacy Signup accounts
+    legacy_users = Signup.objects.all().order_by('name')
+    
+    # System statistics
+    system_stats = {
+        'total_climate_users': climate_users.count(),
+        'total_legacy_users': legacy_users.count(),
+        'active_climate_users': climate_users.filter(is_active=True).count(),
+        'admin_users': climate_users.filter(role=UserRole.ADMINISTRATOR).count(),
+        'analyst_users': climate_users.filter(role=UserRole.ANALYST).count(),
+        'viewer_users': climate_users.filter(role=UserRole.VIEWER).count(),
+    }
+    
+    context = {
+        'climate_users': climate_users,
+        'legacy_users': legacy_users,
+        'system_stats': system_stats,
+    }
+    
+    return render(request, 'admin/system_credentials.html', context)

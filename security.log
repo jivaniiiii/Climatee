@@ -3,3 +3,5 @@ WARNING 2025-09-08 17:32:02,846 log 1623 130177975711424 Forbidden (Origin check
 WARNING 2025-09-08 17:32:44,748 log 1623 130177975711424 Forbidden (Origin checking failed - https://work-1-ycmjkixljzsamnoi.prod-runtime.all-hands.dev does not match any trusted origins.): /login/
 WARNING 2025-09-08 17:33:00,786 log 1623 130177975711424 Forbidden (Origin checking failed - https://work-1-ycmjkixljzsamnoi.prod-runtime.all-hands.dev does not match any trusted origins.): /login/
 WARNING 2025-09-08 20:35:59,641 log 1628 125929271568064 Forbidden (Origin checking failed - https://work-1-mzyrtyrutnzmbygn.prod-runtime.all-hands.dev does not match any trusted origins.): /login/
+WARNING 2025-09-09 00:10:59,581 log 2444 132446590858944 Forbidden (Origin checking failed - https://work-1-qveggnarvkbsmlls.prod-runtime.all-hands.dev does not match any trusted origins.): /login/
+WARNING 2025-09-09 00:18:05,376 log 3744 130816273262272 Forbidden (CSRF cookie not set.): /management/users/promote-demote/

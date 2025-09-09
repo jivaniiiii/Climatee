@@ -61,6 +61,13 @@ urlpatterns = [
     # ML Models
     path('models/', climate_views.ml_models_view, name='ml_models'),
     
+    # User Management (Admin Only)
+    path('management/users/', climate_views.user_management_view, name='user_management'),
+    path('management/users/<int:user_id>/', climate_views.user_details_view, name='user_details'),
+    path('management/users/promote-demote/', climate_views.promote_demote_user, name='promote_demote_user'),
+    path('management/users/toggle-status/', climate_views.toggle_user_status, name='toggle_user_status'),
+    path('management/credentials/', climate_views.system_credentials_view, name='system_credentials'),
+    
     # Legacy URLs (for backward compatibility)
     path('signup/', auth.SignupPage, name='legacy_signup'),
     path('signupinserted/', auth.signupPageinserted, name='legacy_signupinserted'),
