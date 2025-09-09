@@ -388,3 +388,54 @@ INFO "GET /management/users/ HTTP/1.1" 200 34472
 WARNING Not Found: /management/static/images/logo.png
 WARNING "GET /management/static/images/logo.png HTTP/1.1" 404 6463
 INFO "GET / HTTP/1.1" 200 24054
+INFO "GET /dashboard/admin/ HTTP/1.1" 200 28349
+INFO "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+WARNING Not Found: /dashboard/static/images/logo.png
+WARNING "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO "GET /static/js/main.js HTTP/1.1" 304 0
+INFO "GET /management/users/ HTTP/1.1" 200 34472
+WARNING Not Found: /management/static/images/logo.png
+WARNING "GET /management/static/images/logo.png HTTP/1.1" 404 6463
+INFO "GET /management/users/2/ HTTP/1.1" 200 24694
+WARNING Not Found: /management/users/static/images/logo.png
+WARNING "GET /management/users/static/images/logo.png HTTP/1.1" 404 6481
+INFO "GET /dashboard/admin/ HTTP/1.1" 200 28382
+WARNING Not Found: /dashboard/static/images/logo.png
+WARNING "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO "GET /alerts/ HTTP/1.1" 200 40336
+INFO "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO Alert 79be7f8a-ddbe-4394-a881-bec875238914 acknowledged by admin
+INFO "POST /alerts/acknowledge/79be7f8a-ddbe-4394-a881-bec875238914/ HTTP/1.1" 302 0
+INFO "GET /alerts/ HTTP/1.1" 200 40677
+INFO "GET /alerts/ HTTP/1.1" 200 40336
+INFO "GET /alerts/ HTTP/1.1" 200 40336
+INFO "GET /alerts/ HTTP/1.1" 200 40336
+INFO Alert 79be7f8a-ddbe-4394-a881-bec875238914 acknowledged by admin
+INFO "POST /alerts/acknowledge/79be7f8a-ddbe-4394-a881-bec875238914/ HTTP/1.1" 302 0
+INFO "GET /alerts/ HTTP/1.1" 200 40677
+INFO Alert 5848df6b-66a4-48f1-81d5-8a2a4afbb5cb acknowledged by admin
+INFO "POST /alerts/acknowledge/5848df6b-66a4-48f1-81d5-8a2a4afbb5cb/ HTTP/1.1" 302 0
+INFO "GET /alerts/ HTTP/1.1" 200 40677
+INFO "GET /alerts/ HTTP/1.1" 200 40336
+INFO "GET /profile/ HTTP/1.1" 200 25979
+INFO "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO "GET /static/lib/animate/animate.min.css HTTP/1.1" 304 0
+INFO "GET /static/lib/owlcarousel/assets/owl.carousel.min.css HTTP/1.1" 304 0
+INFO "GET /static/lib/wow/wow.min.js HTTP/1.1" 304 0
+INFO "GET /static/lib/easing/easing.min.js HTTP/1.1" 304 0
+INFO "GET /static/lib/owlcarousel/owl.carousel.min.js HTTP/1.1" 304 0
+INFO "GET /static/js/main.js HTTP/1.1" 304 0
+INFO "GET /static/lib/waypoints/waypoints.min.js HTTP/1.1" 304 0
+INFO "GET /dashboard/admin/ HTTP/1.1" 200 28385
+WARNING Not Found: /dashboard/static/images/logo.png
+WARNING "GET /dashboard/static/images/logo.png HTTP/1.1" 404 6460
+INFO "GET / HTTP/1.1" 200 24054
+INFO "GET / HTTP/1.1" 200 24054
